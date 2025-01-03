@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DevIO.NerdStore.Identity.API.Controllers;
 
+[ApiController]
 [Route("api/identity")]
 public class AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager) : Controller
 {

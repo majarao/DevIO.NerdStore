@@ -5,11 +5,8 @@ builder.Services.AddOpenApi();
 
 WebApplication app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-    app.MapSwagger();
-}
+app.MapOpenApi();
+app.UseSwaggerUI(options => options.SwaggerEndpoint("/openapi/v1.json", "Carrinho API"));
 
 app.UseHttpsRedirection();
 

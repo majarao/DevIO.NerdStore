@@ -24,5 +24,5 @@ public class UsuarioLogin
 
     [Required(ErrorMessage = "O campo {0} é obrigatório")]
     [StringLength(100, ErrorMessage = "O campo {0} precisar ter entre {2} e {1} caracteres", MinimumLength = 6)]
-    public string Senha { get; set;} = string.Empty;
+    public string Senha { get; set; } = string.Empty;
 }
