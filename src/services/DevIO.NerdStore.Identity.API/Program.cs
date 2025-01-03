@@ -15,7 +15,8 @@ builder.Services
     .AddDefaultIdentity<IdentityUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDBContext>()
-    .AddDefaultTokenProviders();
+    .AddDefaultTokenProviders()
+    .AddErrorDescriber<IdentityMensagensPortugues>();
 
 IConfigurationSection appSettingsSection = builder.Configuration.GetSection("AppSettings");
 builder.Services.Configure<AppSettings>(appSettingsSection);
@@ -24,7 +25,7 @@ AppSettings? appSettings = appSettingsSection.Get<AppSettings>();
 byte[] key = Encoding.ASCII.GetBytes(appSettings?.Secret ?? "x");
 
 builder.Services
-    .AddAuthentication(options => 
+    .AddAuthentication(options =>
     {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
         options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;

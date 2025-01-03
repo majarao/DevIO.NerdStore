@@ -37,7 +37,7 @@ public class UsuarioRespostaLogin
 public class UsuarioToken
 {
     public string Id { get; set; } = string.Empty;
-    public string Email {  set; get; } = string.Empty;
+    public string Email { set; get; } = string.Empty;
     public IEnumerable<UsuarioClaim>? Claims { get; set; }
 }
 
