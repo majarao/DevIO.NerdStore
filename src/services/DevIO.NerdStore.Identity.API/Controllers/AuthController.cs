@@ -10,12 +10,11 @@ using System.Text;
 
 namespace DevIO.NerdStore.Identity.API.Controllers;
 
-[ApiController]
 [Route("api/identity")]
 public class AuthController(
     UserManager<IdentityUser> userManager,
     SignInManager<IdentityUser> signInManager,
-    IOptions<AppSettings> appSettings) : Controller
+    IOptions<AppSettings> appSettings) : MainController
 {
     private UserManager<IdentityUser> UserManager { get; } = userManager;
     private SignInManager<IdentityUser> SignInManager { get; } = signInManager;
@@ -25,7 +24,7 @@ public class AuthController(
     public async Task<ActionResult> Registrar(UsuarioRegistro usuarioRegistro)
     {
         if (!ModelState.IsValid)
-            return BadRequest();
+            return CustomResponse(ModelState);
 
         IdentityUser user = new()
         {
@@ -37,23 +36,33 @@ public class AuthController(
         IdentityResult result = await UserManager.CreateAsync(user, usuarioRegistro.Senha);
 
         if (result.Succeeded)
-            return Ok();
+            return CustomResponse(await GerarJwt(usuarioRegistro.Email));
 
-        return BadRequest();
+        foreach (IdentityError error in result.Errors)
+            AdicionarErroProcessamento(error.Description);
+
+        return CustomResponse();
     }
 
     [HttpPost("login")]
     public async Task<ActionResult> Login(UsuarioLogin usuarioLogin)
     {
         if (!ModelState.IsValid)
-            return BadRequest();
+            return CustomResponse(ModelState);
 
         Microsoft.AspNetCore.Identity.SignInResult result = await SignInManager.PasswordSignInAsync(usuarioLogin.Email, usuarioLogin.Senha, false, true);
 
         if (result.Succeeded)
-            return Ok(await GerarJwt(usuarioLogin.Email));
+            return CustomResponse(await GerarJwt(usuarioLogin.Email));
 
-        return BadRequest();
+        if (result.IsLockedOut)
+        {
+            AdicionarErroProcessamento("Usuário temporiamente bloqueado por tentativa inválidas");
+            return CustomResponse();
+        }
+
+        AdicionarErroProcessamento("Usuário ou senha incorretos");
+        return CustomResponse();
     }
 
     private async Task<UsuarioRespostaLogin> GerarJwt(string email)
