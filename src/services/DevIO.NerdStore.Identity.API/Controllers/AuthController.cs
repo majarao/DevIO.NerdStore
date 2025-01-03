@@ -69,6 +69,17 @@ public class AuthController(
     {
         IdentityUser user = await UserManager.FindByEmailAsync(email) ?? new();
         IList<Claim> claims = await UserManager.GetClaimsAsync(user);
+
+        ClaimsIdentity claimsIdentity = await ObterClaimsUsuario(claims, user);
+        string encodedToken = CodificarToken(claimsIdentity);
+
+        UsuarioRespostaLogin response = ObterRespostaToken(encodedToken, user, claims);
+
+        return response;
+    }
+
+    private async Task<ClaimsIdentity> ObterClaimsUsuario(ICollection<Claim> claims, IdentityUser user)
+    {
         IList<string> roles = await UserManager.GetRolesAsync(user);
 
         claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
@@ -83,6 +94,11 @@ public class AuthController(
         ClaimsIdentity identityClaims = new();
         identityClaims.AddClaims(claims);
 
+        return identityClaims;
+    }
+
+    private string CodificarToken(ClaimsIdentity claimsIdentity)
+    {
         JwtSecurityTokenHandler tokenHandler = new();
         byte[] key = Encoding.ASCII.GetBytes(AppSettings.Secret);
 
@@ -91,13 +107,18 @@ public class AuthController(
             {
                 Issuer = AppSettings.Emissor,
                 Audience = AppSettings.ValidoEm,
-                Subject = identityClaims,
+                Subject = claimsIdentity,
                 Expires = DateTime.UtcNow.AddHours(AppSettings.ExpiracaoHoras),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             });
 
         string encodedToken = tokenHandler.WriteToken(token);
 
+        return encodedToken;
+    }
+
+    private UsuarioRespostaLogin ObterRespostaToken(string encodedToken, IdentityUser user, IEnumerable<Claim> claims)
+    {
         UsuarioRespostaLogin response = new()
         {
             AccessToken = encodedToken,
