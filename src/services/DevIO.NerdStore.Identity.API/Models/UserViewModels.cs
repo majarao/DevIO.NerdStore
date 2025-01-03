@@ -26,3 +26,23 @@ public class UsuarioLogin
     [StringLength(100, ErrorMessage = "O campo {0} precisar ter entre {2} e {1} caracteres", MinimumLength = 6)]
     public string Senha { get; set; } = string.Empty;
 }
+
+public class UsuarioRespostaLogin
+{
+    public string AccessToken { get; set; } = string.Empty;
+    public double ExpiresIn { get; set; }
+    public UsuarioToken? UsuarioToken { get; set; }
+}
+
+public class UsuarioToken
+{
+    public string Id { get; set; } = string.Empty;
+    public string Email {  set; get; } = string.Empty;
+    public IEnumerable<UsuarioClaim>? Claims { get; set; }
+}
+
+public class UsuarioClaim
+{
+    public string Value { get; set; } = string.Empty;
+    public string Type { get; set; } = string.Empty;
+}
