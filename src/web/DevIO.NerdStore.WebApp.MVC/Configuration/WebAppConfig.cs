@@ -1,10 +1,14 @@
-﻿namespace DevIO.NerdStore.WebApp.MVC.Configuration;
+﻿using DevIO.NerdStore.WebApp.MVC.Extensions;
+
+namespace DevIO.NerdStore.WebApp.MVC.Configuration;
 
 public static class WebAppConfig
 {
-    public static IServiceCollection AddMvcConfiguration(this IServiceCollection services)
+    public static IServiceCollection AddMvcConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddControllersWithViews();
+
+        services.Configure<AppSettings>(configuration);
 
         return services;
     }
@@ -17,7 +21,8 @@ public static class WebAppConfig
         }
         else
         {
-            app.UseExceptionHandler("/Home/Error");
+            app.UseExceptionHandler("/erro/500");
+            app.UseStatusCodePagesWithRedirects("/erro/{0}");
             app.UseHsts();
         }
 
@@ -28,6 +33,8 @@ public static class WebAppConfig
         app.UseRouting();
 
         app.UseIdentityConfiguration();
+
+        app.UseMiddleware<ExceptionMiddleware>();
 
         app.UseEndpoints(endpoints =>
         {
