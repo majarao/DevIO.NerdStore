@@ -31,7 +31,7 @@ public abstract class MainController : Controller
         return CustomResponse();
     }
 
-    protected bool OperacaoValida() => Erros.Count != 0;
+    protected bool OperacaoValida() => Erros.Count == 0;
 
     protected void AdicionarErroProcessamento(string erro) => Erros.Add(erro);
 
