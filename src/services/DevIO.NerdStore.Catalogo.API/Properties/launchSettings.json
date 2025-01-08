@@ -1,17 +1,29 @@
 {
   "profiles": {
-    "http": {
+    "https Development": {
       "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5293"
+      "applicationUrl": "https://localhost:7224;http://localhost:5293",
+      "launchBrowser": true,
+      "launchUrl": "swagger"
     },
-    "https": {
+    "https Staging": {
       "commandName": "Project",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Staging"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7224;http://localhost:5293",
+      "launchBrowser": true,
+      "launchUrl": "swagger"
+    },
+    "https Production": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7224;http://localhost:5293",
