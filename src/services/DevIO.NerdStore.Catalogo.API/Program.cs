@@ -1,29 +1,27 @@
-using DevIO.NerdStore.Catalogo.API.Data;
-using DevIO.NerdStore.Catalogo.API.Data.Repositories;
-using DevIO.NerdStore.Catalogo.API.Models;
-using Microsoft.EntityFrameworkCore;
+using DevIO.NerdStore.Catalogo.API.Configuration;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<CatalogoContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-);
+IConfigurationBuilder builderConfiguration = new ConfigurationBuilder()
+    .SetBasePath(builder.Environment.ContentRootPath)
+    .AddJsonFile("appsettings.json", true, true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true)
+    .AddEnvironmentVariables();
 
-builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
-builder.Services.AddScoped<CatalogoContext>();
+if (builder.Environment.IsDevelopment())
+    builderConfiguration.AddUserSecrets<Program>();
 
-builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+IConfiguration Configuration = builderConfiguration.Build();
+
+builder.Services
+    .AddApiConfiguration(Configuration)
+    .RegisterServices()
+    .AddSwaggerConfiguration();
 
 WebApplication app = builder.Build();
 
-app.MapOpenApi();
-app.UseSwaggerUI(options => options.SwaggerEndpoint("/openapi/v1.json", "Catalogo API"));
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
+app
+    .UseApiConfiguration(builder.Environment)
+    .UseSwaggerConfiguration();
 
 app.Run();
