@@ -12,8 +12,6 @@ public static class ApiConfig
 
         services.AddControllers();
 
-        services.AddOpenApi();
-
         services.AddCors(options =>
         {
             options.AddPolicy("Total",
@@ -37,6 +35,10 @@ public static class ApiConfig
         app.UseHttpsRedirection();
 
         app.UseRouting();
+
+        app.UseAuthorization();
+
+        app.UseAuthentication();
 
         app.UseCors("Total");
 

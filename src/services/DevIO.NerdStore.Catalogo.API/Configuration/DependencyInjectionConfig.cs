@@ -1,5 +1,5 @@
-﻿using DevIO.NerdStore.Catalogo.API.Data.Repositories;
-using DevIO.NerdStore.Catalogo.API.Data;
+﻿using DevIO.NerdStore.Catalogo.API.Data;
+using DevIO.NerdStore.Catalogo.API.Data.Repositories;
 using DevIO.NerdStore.Catalogo.API.Models;
 
 namespace DevIO.NerdStore.Catalogo.API.Configuration;

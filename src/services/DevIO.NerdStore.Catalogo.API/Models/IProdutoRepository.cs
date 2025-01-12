@@ -1,5 +1,4 @@
 ﻿using DevIO.NerdStore.Core.Data;
-using DevIO.NerdStore.Core.DomainObjects;
 
 namespace DevIO.NerdStore.Catalogo.API.Models;
 

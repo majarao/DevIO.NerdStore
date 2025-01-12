@@ -1,6 +1,6 @@
-﻿using System.Security.Cryptography;
+﻿using Microsoft.AspNetCore.Mvc.Razor;
+using System.Security.Cryptography;
 using System.Text;
-using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace DevIO.NerdStore.WebApp.MVC.Extensions;
 

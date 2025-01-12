@@ -8,14 +8,6 @@ public static class SwaggerConfig
     {
         services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo()
-            {
-                Title = "NerdStore Enterprise Catálogo API",
-                Description = "Esta API faz parte do curso ASP.NET Core Enterprise Applications.",
-                Contact = new OpenApiContact() { Name = "Thiago Majarão Longo", Email = "majarao@outlook.com" },
-                License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
-            });
-
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 Description = "Insira o token JWT desta maneira: Bearer {seu token}",
@@ -48,9 +40,9 @@ public static class SwaggerConfig
 
     public static IApplicationBuilder UseSwaggerConfiguration(this IApplicationBuilder app)
     {
-        app.UseEndpoints(endpoints => endpoints.MapOpenApi());
+        app.UseSwagger();
 
-        app.UseSwaggerUI(options => options.SwaggerEndpoint("/openapi/v1.json", "Catalogo API"));
+        app.UseSwaggerUI();
 
         return app;
     }

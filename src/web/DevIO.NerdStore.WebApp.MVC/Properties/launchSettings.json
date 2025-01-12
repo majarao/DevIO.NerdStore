@@ -1,15 +1,6 @@
 {
   "profiles": {
-    "http": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5270"
-    },
-    "https": {
+    "https Development": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
@@ -18,16 +9,23 @@
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7065;http://localhost:5270"
     },
-    "Container (Dockerfile)": {
-      "commandName": "Docker",
+    "https Staging": {
+      "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "environmentVariables": {
-        "ASPNETCORE_HTTPS_PORTS": "8081",
-        "ASPNETCORE_HTTP_PORTS": "8080"
+        "ASPNETCORE_ENVIRONMENT": "Staging"
       },
-      "publishAllPorts": true,
-      "useSSL": true
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7065;http://localhost:5270"
+    },
+    "https Production": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7065;http://localhost:5270"
     }
   },
   "$schema": "https://json.schemastore.org/launchsettings.json"
