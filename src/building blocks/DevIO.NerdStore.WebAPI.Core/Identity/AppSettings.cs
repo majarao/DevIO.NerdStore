@@ -1,4 +1,4 @@
-﻿namespace DevIO.NerdStore.Identity.API.Extensions;
+﻿namespace DevIO.NerdStore.WebAPI.Core.Identity;
 
 public class AppSettings
 {

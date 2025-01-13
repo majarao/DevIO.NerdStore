@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{325A67B2-1F05-4AFC-A85A-EDE24215AF39}"
 EndProject
@@ -43,6 +43,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Pagamento.A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Pedido.API", "src\services\DevIO.NerdStore.Pedido.API\DevIO.NerdStore.Pedido.API.csproj", "{4EB94112-C4C0-41C2-BD62-A047BE44E9A6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{13F54F4B-21B5-415B-BB06-20FA749F0B79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.WebAPI.Core", "src\building blocks\DevIO.NerdStore.WebAPI.Core\DevIO.NerdStore.WebAPI.Core.csproj", "{9D7E5CA1-B07C-4E79-A901-068F4BD2E5E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +85,10 @@ Global
 		{4EB94112-C4C0-41C2-BD62-A047BE44E9A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EB94112-C4C0-41C2-BD62-A047BE44E9A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4EB94112-C4C0-41C2-BD62-A047BE44E9A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D7E5CA1-B07C-4E79-A901-068F4BD2E5E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D7E5CA1-B07C-4E79-A901-068F4BD2E5E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D7E5CA1-B07C-4E79-A901-068F4BD2E5E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D7E5CA1-B07C-4E79-A901-068F4BD2E5E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,5 +113,7 @@ Global
 		{E95BFCA9-2E28-4F2E-8F0C-265ED2E388A2} = {8B2ADA7B-324B-45E7-B75E-2E581E42A509}
 		{05C4F037-1F63-4D88-A517-CBACF40A122B} = {A1201300-A792-42F9-AC3D-6919C7BE1DF3}
 		{4EB94112-C4C0-41C2-BD62-A047BE44E9A6} = {D249FA84-46F0-4E79-B54B-50CF861A14B7}
+		{13F54F4B-21B5-415B-BB06-20FA749F0B79} = {E04EDD3D-A99C-4863-B30B-97260844381D}
+		{9D7E5CA1-B07C-4E79-A901-068F4BD2E5E6} = {13F54F4B-21B5-415B-BB06-20FA749F0B79}
 	EndGlobalSection
 EndGlobal

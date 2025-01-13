@@ -1,4 +1,6 @@
-﻿namespace DevIO.NerdStore.Identity.API.Configuration;
+﻿using DevIO.NerdStore.WebAPI.Core.Identity;
+
+namespace DevIO.NerdStore.Identity.API.Configuration;
 
 public static class ApiConfig
 {
@@ -15,7 +17,7 @@ public static class ApiConfig
 
         app.UseRouting();
 
-        app.UseIdentityConfiguration();
+        app.UseAuthConfiguration();
 
         app.UseEndpoints(endpoints => endpoints.MapControllers());
 

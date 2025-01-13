@@ -1,5 +1,5 @@
-﻿using DevIO.NerdStore.Identity.API.Extensions;
-using DevIO.NerdStore.Identity.API.Models;
+﻿using DevIO.NerdStore.Identity.API.Models;
+using DevIO.NerdStore.WebAPI.Core.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;

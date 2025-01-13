@@ -1,4 +1,5 @@
 ﻿using DevIO.NerdStore.Catalogo.API.Data;
+using DevIO.NerdStore.WebAPI.Core.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DevIO.NerdStore.Catalogo.API.Configuration;
@@ -36,9 +37,7 @@ public static class ApiConfig
 
         app.UseRouting();
 
-        app.UseAuthorization();
-
-        app.UseAuthentication();
+        app.UseAuthConfiguration();
 
         app.UseCors("Total");
 

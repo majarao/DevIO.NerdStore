@@ -1,4 +1,5 @@
 using DevIO.NerdStore.Catalogo.API.Configuration;
+using DevIO.NerdStore.WebAPI.Core.Identity;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ IConfiguration Configuration = builderConfiguration.Build();
 
 builder.Services
     .AddApiConfiguration(Configuration)
+    .AddJwtConfiguration(Configuration)
     .RegisterServices()
     .AddSwaggerConfiguration();
 
