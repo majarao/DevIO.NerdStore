@@ -9,15 +9,15 @@ namespace DevIO.NerdStore.Catalogo.API.Controllers;
 [Authorize(AuthenticationSchemes = "Bearer")]
 public class CatalogoController(IProdutoRepository repository) : Controller
 {
-    private IProdutoRepository Repository { get; } = repository;
+    private IProdutoRepository ProdutoRepository { get; } = repository;
 
     [AllowAnonymous]
     [HttpGet("catalogo/produtos")]
     public async Task<IEnumerable<Produto>> Index() =>
-        await Repository.ObterTodos();
+        await ProdutoRepository.ObterTodos();
 
     [ClaimsAuthorize("Catalogo", "Ler")]
     [HttpGet("catalogo/produtos/{id}")]
     public async Task<Produto?> ProdutoDetalhe(Guid id) =>
-        await Repository.ObterPorId(id);
+        await ProdutoRepository.ObterPorId(id);
 }
