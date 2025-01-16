@@ -6,14 +6,18 @@ namespace DevIO.NerdStore.WebApp.MVC.Configuration;
 
 public static class DependencyInjectionConfig
 {
-    public static IServiceCollection RegisterServices(this IServiceCollection services)
+    public static IServiceCollection RegisterServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
 
         services.AddHttpClient<IAutenticacaoService, AutenticacaoService>();
 
-        services.AddHttpClient<ICatalogoService, CatalogoService>()
-            .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
+        services.AddHttpClient("Refit", options =>
+        {
+            options.BaseAddress = new Uri(configuration.GetSection("CatalogoUrl").Value ?? string.Empty);
+        })
+            .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
+            .AddTypedClient(Refit.RestService.For<ICatalogoService>);
 
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddScoped<IUser, AspNetUser>();

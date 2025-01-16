@@ -16,7 +16,7 @@ IConfiguration Configuration = builderConfiguration.Build();
 builder.Services
     .AddIdentityConfiguration()
     .AddMvcConfiguration(Configuration)
-    .RegisterServices();
+    .RegisterServices(Configuration);
 
 WebApplication app = builder.Build();
 
