@@ -1,4 +1,6 @@
 ﻿using DevIO.NerdStore.WebApp.MVC.Extensions;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 namespace DevIO.NerdStore.WebApp.MVC.Configuration;
 
@@ -33,6 +35,14 @@ public static class WebAppConfig
         app.UseRouting();
 
         app.UseIdentityConfiguration();
+
+        CultureInfo[] supportedCultures = [new("pt-BR")];
+        app.UseRequestLocalization(new RequestLocalizationOptions
+        {
+            DefaultRequestCulture = new RequestCulture("pt-BR"),
+            SupportedCultures = supportedCultures,
+            SupportedUICultures = supportedCultures
+        });
 
         app.UseMiddleware<ExceptionMiddleware>();
 
