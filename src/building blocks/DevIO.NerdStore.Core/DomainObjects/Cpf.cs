@@ -9,7 +9,7 @@ public class Cpf
 
     protected Cpf() { }
 
-    public Cpf(string numero)
+    public Cpf(string? numero)
     {
         if (!Validar(numero))
             throw new DomainException("CPF inválido");
@@ -17,11 +17,11 @@ public class Cpf
         Numero = numero;
     }
 
-    public static bool Validar(string cpf)
+    public static bool Validar(string? cpf)
     {
-        cpf = cpf.ApenasNumeros(cpf);
+        cpf = cpf?.ApenasNumeros(cpf);
 
-        if (cpf.Length > 11)
+        if (cpf!.Length > 11)
             return false;
 
         while (cpf.Length != 11)

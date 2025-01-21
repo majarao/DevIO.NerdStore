@@ -1,5 +1,6 @@
 using DevIO.NerdStore.Clientes.API.Configuration;
 using DevIO.NerdStore.WebAPI.Core.Identity;
+using System.Reflection;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +19,8 @@ builder.Services
     .AddApiConfiguration(Configuration)
     .AddJwtConfiguration(Configuration)
     .RegisterServices()
-    .AddSwaggerConfiguration();
+    .AddSwaggerConfiguration()
+    .AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
 WebApplication app = builder.Build();
 

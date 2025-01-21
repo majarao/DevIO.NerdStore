@@ -10,7 +10,7 @@ public class Email
 
     protected Email() { }
 
-    public Email(string endereco)
+    public Email(string? endereco)
     {
         if (!Validar(endereco))
             throw new DomainException("E-mail inválido");
@@ -18,9 +18,9 @@ public class Email
         Endereco = endereco;
     }
 
-    public static bool Validar(string email)
+    public static bool Validar(string? email)
     {
         Regex regexEmail = new(@"^(?("")("".+?""@)|(([0-9a-zA-Z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-zA-Z])@))(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,6}))$");
-        return regexEmail.IsMatch(email);
+        return regexEmail.IsMatch(email ?? string.Empty);
     }
 }
