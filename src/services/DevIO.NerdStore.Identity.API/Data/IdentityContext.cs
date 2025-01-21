@@ -3,4 +3,4 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DevIO.NerdStore.Identity.API.Data;
 
-public class ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : IdentityDbContext(options) { }
+public class IdentityContext(DbContextOptions<IdentityContext> options) : IdentityDbContext(options) { }

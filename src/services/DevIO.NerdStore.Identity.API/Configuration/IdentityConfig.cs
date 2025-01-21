@@ -10,13 +10,13 @@ public static class IdentityConfig
 {
     public static IServiceCollection AddIdentityConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<ApplicationDBContext>(
+        services.AddDbContext<IdentityContext>(
             options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
         services
             .AddDefaultIdentity<IdentityUser>()
             .AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDBContext>()
+            .AddEntityFrameworkStores<IdentityContext>()
             .AddDefaultTokenProviders()
             .AddErrorDescriber<IdentityMensagensPortugues>();
 

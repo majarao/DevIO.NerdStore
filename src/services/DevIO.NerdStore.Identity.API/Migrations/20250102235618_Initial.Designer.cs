@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DevIO.NerdStore.Identity.API.Migrations
 {
-    [DbContext(typeof(ApplicationDBContext))]
+    [DbContext(typeof(IdentityContext))]
     [Migration("20250102235618_Initial")]
     partial class Initial
     {
