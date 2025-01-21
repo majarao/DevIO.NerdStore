@@ -5,8 +5,10 @@ using MediatR;
 
 namespace DevIO.NerdStore.Clientes.API.Application.Commands;
 
-public class ClienteCommandHandler : CommandHandler, IRequestHandler<RegistrarClienteCommand, ValidationResult>
+public class ClienteCommandHandler(IClienteRepository repository) : CommandHandler, IRequestHandler<RegistrarClienteCommand, ValidationResult?>
 {
+    private IClienteRepository Repository { get; } = repository;
+
     public async Task<ValidationResult?> Handle(RegistrarClienteCommand message, CancellationToken cancellationToken)
     {
         if (!message.EhValido())
@@ -14,6 +16,16 @@ public class ClienteCommandHandler : CommandHandler, IRequestHandler<RegistrarCl
 
         Cliente cliente = new(message.Id, message.Nome, message.Email, message.Cpf);
 
-        return message.ValidationResult;
+        Cliente? clienteExistente = await Repository.ObterPorCpf(cliente.Cpf?.Numero!);
+
+        if (clienteExistente is not null)
+        {
+            AdicionarErro("Este CPF já está em uso.");
+            return ValidationResult;
+        }
+
+        Repository.Adicionar(cliente);
+
+        return await PersistirDados(Repository.UnitOfWork);
     }
 }
