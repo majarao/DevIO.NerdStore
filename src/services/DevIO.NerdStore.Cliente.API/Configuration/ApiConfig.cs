@@ -1,14 +1,14 @@
-﻿using DevIO.NerdStore.Catalogo.API.Data;
+﻿using DevIO.NerdStore.Clientes.API.Data;
 using DevIO.NerdStore.WebAPI.Core.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace DevIO.NerdStore.Catalogo.API.Configuration;
+namespace DevIO.NerdStore.Clientes.API.Configuration;
 
 public static class ApiConfig
 {
     public static IServiceCollection AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<CatalogoContext>(options =>
+        services.AddDbContext<ClientesContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
         services.AddControllers();
@@ -33,9 +33,9 @@ public static class ApiConfig
 
         app.UseRouting();
 
-        app.UseAuthConfiguration();
-
         app.UseCors("Total");
+
+        app.UseAuthConfiguration();
 
         app.UseEndpoints(endpoints => endpoints.MapControllers());
 

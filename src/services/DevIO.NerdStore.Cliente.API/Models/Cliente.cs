@@ -1,6 +1,6 @@
 ﻿using DevIO.NerdStore.Core.DomainObjects;
 
-namespace DevIO.NerdStore.Cliente.API.Models;
+namespace DevIO.NerdStore.Clientes.API.Models;
 
 public class Cliente : Entity, IAggregateRoot
 {

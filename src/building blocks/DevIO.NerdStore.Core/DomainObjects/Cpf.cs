@@ -11,7 +11,7 @@ public class Cpf
 
     public Cpf(string numero)
     {
-        if (!Validar(numero)) 
+        if (!Validar(numero))
             throw new DomainException("CPF inválido");
 
         Numero = numero;

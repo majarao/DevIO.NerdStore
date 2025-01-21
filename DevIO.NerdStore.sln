@@ -37,7 +37,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Carrinho.AP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Catalogo.API", "src\services\DevIO.NerdStore.Catalogo.API\DevIO.NerdStore.Catalogo.API.csproj", "{E6393B7B-89C5-4FBD-913F-F4E5F28E4F94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Cliente.API", "src\services\DevIO.NerdStore.Cliente.API\DevIO.NerdStore.Cliente.API.csproj", "{E95BFCA9-2E28-4F2E-8F0C-265ED2E388A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Clientes.API", "src\services\DevIO.NerdStore.Cliente.API\DevIO.NerdStore.Clientes.API.csproj", "{E95BFCA9-2E28-4F2E-8F0C-265ED2E388A2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Pagamento.API", "src\services\DevIO.NerdStore.Pagamento.API\DevIO.NerdStore.Pagamento.API.csproj", "{05C4F037-1F63-4D88-A517-CBACF40A122B}"
 EndProject

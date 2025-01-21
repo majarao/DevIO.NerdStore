@@ -1,6 +1,6 @@
 ﻿using DevIO.NerdStore.Core.DomainObjects;
 
-namespace DevIO.NerdStore.Cliente.API.Models;
+namespace DevIO.NerdStore.Clientes.API.Models;
 
 public class Endereco(string logradouro, string numero, string complemento, string bairro, string cep, string cidade, string estado) : Entity
 {
