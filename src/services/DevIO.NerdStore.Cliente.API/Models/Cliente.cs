@@ -5,8 +5,8 @@ namespace DevIO.NerdStore.Cliente.API.Models;
 public class Cliente : Entity, IAggregateRoot
 {
     public string? Nome { get; private set; }
-    //public Email Email { get; private set; }
-    //public Cpf Cpf { get; private set; }
+    public Email? Email { get; private set; }
+    public Cpf? Cpf { get; private set; }
     public bool Excluido { get; private set; }
     public Endereco? Endereco { get; private set; }
 
@@ -16,15 +16,12 @@ public class Cliente : Entity, IAggregateRoot
     {
         Id = id;
         Nome = nome;
-        //Email = new Email(email);
-        //Cpf = new Cpf(cpf);
+        Email = new(email);
+        Cpf = new(cpf);
         Excluido = false;
     }
 
-    //public void TrocarEmail(string email)
-    //{
-    //    Email = new Email(email);
-    //}
+    public void TrocarEmail(string email) => Email = new(email);
 
     public void AtribuirEndereco(Endereco endereco) => Endereco = endereco;
 }
