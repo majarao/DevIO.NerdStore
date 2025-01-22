@@ -1,13 +1,12 @@
 ﻿using DevIO.NerdStore.Catalogo.API.Models;
-using DevIO.NerdStore.WebAPI.Core.Identity;
+using DevIO.NerdStore.WebAPI.Core.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevIO.NerdStore.Catalogo.API.Controllers;
 
-[ApiController]
 [Authorize(AuthenticationSchemes = "Bearer")]
-public class CatalogoController(IProdutoRepository repository) : Controller
+public class CatalogoController(IProdutoRepository repository) : MainController
 {
     private IProdutoRepository ProdutoRepository { get; } = repository;
 
@@ -16,7 +15,7 @@ public class CatalogoController(IProdutoRepository repository) : Controller
     public async Task<IEnumerable<Produto>> Index() =>
         await ProdutoRepository.ObterTodos();
 
-    [ClaimsAuthorize("Catalogo", "Ler")]
+    [AllowAnonymous]
     [HttpGet("catalogo/produtos/{id}")]
     public async Task<Produto?> ProdutoDetalhe(Guid id) =>
         await ProdutoRepository.ObterPorId(id);

@@ -1,5 +1,7 @@
 ﻿using DevIO.NerdStore.Catalogo.API.Models;
 using DevIO.NerdStore.Core.Data;
+using DevIO.NerdStore.Core.Messages;
+using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -11,6 +13,9 @@ public class CatalogoContext(DbContextOptions<CatalogoContext> options) : DbCont
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Ignore<ValidationResult>();
+        modelBuilder.Ignore<Event>();
+
         foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetProperties().Where(p => p.ClrType == typeof(string))))
             property.SetColumnType("varchar(100)");
 

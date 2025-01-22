@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace DevIO.NerdStore.Identity.API.Controllers;
+namespace DevIO.NerdStore.WebAPI.Core.Controllers;
 
 [ApiController]
 public abstract class MainController : Controller
@@ -26,6 +27,14 @@ public abstract class MainController : Controller
     {
         IEnumerable<ModelError> erros = modelState.Values.SelectMany(e => e.Errors);
         foreach (ModelError erro in erros)
+            AdicionarErroProcessamento(erro.ErrorMessage);
+
+        return CustomResponse();
+    }
+
+    protected ActionResult CustomResponse(ValidationResult validationResult)
+    {
+        foreach (ValidationFailure? erro in validationResult.Errors)
             AdicionarErroProcessamento(erro.ErrorMessage);
 
         return CustomResponse();

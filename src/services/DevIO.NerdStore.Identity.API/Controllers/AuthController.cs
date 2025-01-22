@@ -1,4 +1,5 @@
 ﻿using DevIO.NerdStore.Identity.API.Models;
+using DevIO.NerdStore.WebAPI.Core.Controllers;
 using DevIO.NerdStore.WebAPI.Core.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
