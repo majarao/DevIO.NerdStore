@@ -1,4 +1,5 @@
 ﻿using DevIO.NerdStore.Clientes.API.Application.Commands;
+using DevIO.NerdStore.Clientes.API.Application.Events;
 using DevIO.NerdStore.Clientes.API.Data;
 using DevIO.NerdStore.Clientes.API.Data.Repository;
 using DevIO.NerdStore.Clientes.API.Models;
@@ -14,6 +15,7 @@ public static class DependencyInjectionConfig
     {
         services.AddScoped<IMediatorHandler, MediatorHandler>();
         services.AddScoped<IRequestHandler<RegistrarClienteCommand, ValidationResult?>, ClienteCommandHandler>();
+        services.AddScoped<INotificationHandler<ClienteRegistradoEvent>, ClienteEventHandler>();
 
         services.AddScoped<IClienteRepository, ClienteRepository>();
 

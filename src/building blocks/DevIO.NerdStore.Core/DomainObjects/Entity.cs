@@ -1,8 +1,22 @@
-﻿namespace DevIO.NerdStore.Core.DomainObjects;
+﻿using DevIO.NerdStore.Core.Messages;
+
+namespace DevIO.NerdStore.Core.DomainObjects;
 
 public abstract class Entity
 {
     public Guid Id { get; set; }
+
+    protected Entity() => Id = Guid.NewGuid();
+
+    private readonly List<Event> _notificacoes = [];
+
+    public IReadOnlyCollection<Event> Notificacoes => _notificacoes.AsReadOnly();
+
+    public void AdicionarEvento(Event evento) => _notificacoes.Add(evento);
+
+    public void RemoverEvento(Event evento) => _notificacoes.Remove(evento);
+
+    public void LimparEventos() => _notificacoes.Clear();
 
     public override bool Equals(object? obj)
     {

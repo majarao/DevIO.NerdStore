@@ -1,4 +1,5 @@
-﻿using DevIO.NerdStore.Clientes.API.Models;
+﻿using DevIO.NerdStore.Clientes.API.Application.Events;
+using DevIO.NerdStore.Clientes.API.Models;
 using DevIO.NerdStore.Core.Messages;
 using FluentValidation.Results;
 using MediatR;
@@ -25,6 +26,8 @@ public class ClienteCommandHandler(IClienteRepository repository) : CommandHandl
         }
 
         Repository.Adicionar(cliente);
+
+        cliente.AdicionarEvento(new ClienteRegistradoEvent(message.Id, message.Nome, message.Email, message.Cpf));
 
         return await PersistirDados(Repository.UnitOfWork);
     }

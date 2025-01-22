@@ -1,6 +1,10 @@
-﻿namespace DevIO.NerdStore.Core.Messages;
+﻿using MediatR;
 
-public class Event : Message
+namespace DevIO.NerdStore.Core.Messages;
+
+public class Event : Message, INotification
 {
+    public DateTime Timestamp { get; private set; }
 
+    protected Event() => Timestamp = DateTime.Now;
 }
