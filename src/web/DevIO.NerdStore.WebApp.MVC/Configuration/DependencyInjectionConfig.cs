@@ -1,6 +1,7 @@
 ﻿using DevIO.NerdStore.WebApp.MVC.Extensions;
 using DevIO.NerdStore.WebApp.MVC.Services;
 using DevIO.NerdStore.WebApp.MVC.Services.Handlers;
+using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Polly;
 using Refit;
 
@@ -10,6 +11,8 @@ public static class DependencyInjectionConfig
 {
     public static IServiceCollection RegisterServices(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddSingleton<IValidationAttributeAdapterProvider, CpfValidationAttributeAdapterProvider>();
+
         services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
 
         services.AddHttpClient<IAutenticacaoService, AutenticacaoService>();

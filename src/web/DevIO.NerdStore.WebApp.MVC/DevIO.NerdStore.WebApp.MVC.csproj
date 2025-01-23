@@ -17,6 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\building blocks\DevIO.NerdStore.Core\DevIO.NerdStore.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="Views\Identity\Login.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

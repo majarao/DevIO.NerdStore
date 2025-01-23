@@ -1,10 +1,20 @@
-﻿using System.ComponentModel;
+﻿using DevIO.NerdStore.WebApp.MVC.Extensions;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace DevIO.NerdStore.WebApp.MVC.Models;
 
 public class UsuarioRegistro
 {
+    [Required(ErrorMessage = "O campo {0} é obrigatório")]
+    [DisplayName("Nome Completo")]
+    public string Nome { get; set; } = string.Empty;
+
+    [Required(ErrorMessage = "O campo {0} é obrigatório")]
+    [DisplayName("CPF")]
+    [Cpf]
+    public string Cpf { get; set; } = string.Empty;
+
     [Required(ErrorMessage = "O campo {0} é obrigatório")]
     [EmailAddress(ErrorMessage = "O campo {0} está em formato inválido")]
     public string Email { get; set; } = string.Empty;
