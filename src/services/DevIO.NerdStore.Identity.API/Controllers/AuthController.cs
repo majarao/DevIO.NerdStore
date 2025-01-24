@@ -1,6 +1,8 @@
-﻿using DevIO.NerdStore.Identity.API.Models;
+﻿using DevIO.NerdStore.Core.Messages.Integration;
+using DevIO.NerdStore.Identity.API.Models;
 using DevIO.NerdStore.WebAPI.Core.Controllers;
 using DevIO.NerdStore.WebAPI.Core.Identity;
+using EasyNetQ;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -15,11 +17,13 @@ namespace DevIO.NerdStore.Identity.API.Controllers;
 public class AuthController(
     UserManager<IdentityUser> userManager,
     SignInManager<IdentityUser> signInManager,
-    IOptions<AppSettings> appSettings) : MainController
+    IOptions<AppSettings> appSettings,
+    IBus bus) : MainController
 {
     private UserManager<IdentityUser> UserManager { get; } = userManager;
     private SignInManager<IdentityUser> SignInManager { get; } = signInManager;
     private AppSettings AppSettings { get; } = appSettings.Value;
+    private IBus Bus { get; set; } = bus;
 
     [HttpPost("registrar")]
     public async Task<ActionResult> Registrar(UsuarioRegistro usuarioRegistro)
@@ -37,12 +41,31 @@ public class AuthController(
         IdentityResult result = await UserManager.CreateAsync(user, usuarioRegistro.Senha);
 
         if (result.Succeeded)
+        {
+            ResponseMessage clienteRegistrado = await RegistrarCliente(usuarioRegistro);
+
             return CustomResponse(await GerarJwt(usuarioRegistro.Email));
+        }
 
         foreach (IdentityError error in result.Errors)
             AdicionarErroProcessamento(error.Description);
 
         return CustomResponse();
+    }
+
+    private async Task<ResponseMessage> RegistrarCliente(UsuarioRegistro usuarioRegistro)
+    {
+        IdentityUser? usuario = await UserManager.FindByEmailAsync(usuarioRegistro.Email);
+
+        ArgumentNullException.ThrowIfNull(usuario);
+
+        UsuarioRegistradoIntegrationEvent usuarioRegistrado = new(Guid.Parse(usuario.Id), usuarioRegistro.Nome, usuarioRegistro.Email, usuarioRegistro.Cpf);
+
+        Bus = RabbitHutch.CreateBus("host=localhost:5672");
+
+        ResponseMessage request = await Bus.Rpc.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
+
+        return request;
     }
 
     [HttpPost("login")]
