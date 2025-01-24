@@ -13,9 +13,16 @@ public class RegistroClienteIntegrationHandler(IServiceProvider serviceProvider,
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        Bus.RespondAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(async request => await RegistrarCliente(request));
+        SetResponder();
 
         return Task.CompletedTask;
+    }
+
+    private void SetResponder()
+    {
+        Bus.RespondAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(async request => await RegistrarCliente(request));
+
+        Bus.AdvancedBus!.Connected += OnConnected;
     }
 
     private async Task<ResponseMessage> RegistrarCliente(UsuarioRegistradoIntegrationEvent message)
@@ -33,4 +40,6 @@ public class RegistroClienteIntegrationHandler(IServiceProvider serviceProvider,
 
         return new(resultado);
     }
+
+    private void OnConnected(object? s, EventArgs e) => SetResponder();
 }
