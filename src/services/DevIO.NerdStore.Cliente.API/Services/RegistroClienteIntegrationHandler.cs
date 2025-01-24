@@ -8,14 +8,13 @@ namespace DevIO.NerdStore.Clientes.API.Services;
 
 public class RegistroClienteIntegrationHandler(IServiceProvider serviceProvider) : BackgroundService
 {
-    private IBus? Bus { get; set; }
     private IServiceProvider ServiceProvider { get; } = serviceProvider;
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        Bus = RabbitHutch.CreateBus("host=locahost:5672");
+        IBus bus = RabbitHutch.CreateBus("host=localhost:5672", s => s.EnableSystemTextJson());
 
-        Bus.Rpc.RespondAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(async request => new ResponseMessage(await RegistrarCliente(request)), stoppingToken);
+        bus.Rpc.RespondAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(async request => new ResponseMessage(await RegistrarCliente(request)), stoppingToken);
 
         return Task.CompletedTask;
     }

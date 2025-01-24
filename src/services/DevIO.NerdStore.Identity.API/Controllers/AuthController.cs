@@ -22,7 +22,6 @@ public class AuthController(
     private UserManager<IdentityUser> UserManager { get; } = userManager;
     private SignInManager<IdentityUser> SignInManager { get; } = signInManager;
     private AppSettings AppSettings { get; } = appSettings.Value;
-    private IBus? Bus { get; set; }
 
     [HttpPost("registrar")]
     public async Task<ActionResult> Registrar(UsuarioRegistro usuarioRegistro)
@@ -60,9 +59,9 @@ public class AuthController(
 
         UsuarioRegistradoIntegrationEvent usuarioRegistrado = new(Guid.Parse(usuario.Id), usuarioRegistro.Nome, usuarioRegistro.Email, usuarioRegistro.Cpf);
 
-        Bus = RabbitHutch.CreateBus("host=localhost:5672");
+        IBus bus = RabbitHutch.CreateBus("host=localhost:5672", s => s.EnableSystemTextJson());
 
-        ResponseMessage request = await Bus.Rpc.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
+        ResponseMessage request = await bus.Rpc.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
 
         return request;
     }
