@@ -20,7 +20,8 @@ builder.Services
     .AddJwtConfiguration(Configuration)
     .RegisterServices()
     .AddSwaggerConfiguration()
-    .AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+    .AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()))
+    .AddMessageBusConfiguration(Configuration);
 
 WebApplication app = builder.Build();
 

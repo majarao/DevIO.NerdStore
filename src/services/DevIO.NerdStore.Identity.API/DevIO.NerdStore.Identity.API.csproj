@@ -10,8 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EasyNetQ" Version="7.8.0" />
-    <PackageReference Include="EasyNetQ.Serialization.SystemTextJson" Version="7.8.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.1" />
@@ -29,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\building blocks\DevIO.NerdStore.Core\DevIO.NerdStore.Core.csproj" />
+    <ProjectReference Include="..\..\building blocks\DevIO.NerdStore.MessageBus\DevIO.NerdStore.MessageBus.csproj" />
     <ProjectReference Include="..\..\building blocks\DevIO.NerdStore.WebAPI.Core\DevIO.NerdStore.WebAPI.Core.csproj" />
   </ItemGroup>
 

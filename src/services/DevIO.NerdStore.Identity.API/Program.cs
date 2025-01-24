@@ -16,7 +16,8 @@ IConfiguration Configuration = builderConfiguration.Build();
 builder.Services
     .AddApiConfiguration()
     .AddIdentityConfiguration(Configuration)
-    .AddDocumentacaoConfiguration();
+    .AddDocumentacaoConfiguration()
+    .AddMessageBusConfiguration(Configuration);
 
 WebApplication app = builder.Build();
 
