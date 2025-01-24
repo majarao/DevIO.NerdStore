@@ -1,8 +1,8 @@
 ﻿using DevIO.NerdStore.Core.Messages.Integration;
 using DevIO.NerdStore.Identity.API.Models;
+using DevIO.NerdStore.MessageBus;
 using DevIO.NerdStore.WebAPI.Core.Controllers;
 using DevIO.NerdStore.WebAPI.Core.Identity;
-using EasyNetQ;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -17,11 +17,13 @@ namespace DevIO.NerdStore.Identity.API.Controllers;
 public class AuthController(
     UserManager<IdentityUser> userManager,
     SignInManager<IdentityUser> signInManager,
-    IOptions<AppSettings> appSettings) : MainController
+    IOptions<AppSettings> appSettings,
+    IMessageBus bus) : MainController
 {
     private UserManager<IdentityUser> UserManager { get; } = userManager;
     private SignInManager<IdentityUser> SignInManager { get; } = signInManager;
     private AppSettings AppSettings { get; } = appSettings.Value;
+    private IMessageBus Bus { get; } = bus;
 
     [HttpPost("registrar")]
     public async Task<ActionResult> Registrar(UsuarioRegistro usuarioRegistro)
@@ -42,6 +44,12 @@ public class AuthController(
         {
             ResponseMessage clienteRegistrado = await RegistrarCliente(usuarioRegistro);
 
+            if (!clienteRegistrado.ValidationResult.IsValid)
+            {
+                await UserManager.DeleteAsync(user);
+                return CustomResponse(clienteRegistrado.ValidationResult);
+            }
+
             return CustomResponse(await GerarJwt(usuarioRegistro.Email));
         }
 
@@ -49,21 +57,6 @@ public class AuthController(
             AdicionarErroProcessamento(error.Description);
 
         return CustomResponse();
-    }
-
-    private async Task<ResponseMessage> RegistrarCliente(UsuarioRegistro usuarioRegistro)
-    {
-        IdentityUser? usuario = await UserManager.FindByEmailAsync(usuarioRegistro.Email);
-
-        ArgumentNullException.ThrowIfNull(usuario);
-
-        UsuarioRegistradoIntegrationEvent usuarioRegistrado = new(Guid.Parse(usuario.Id), usuarioRegistro.Nome, usuarioRegistro.Email, usuarioRegistro.Cpf);
-
-        IBus bus = RabbitHutch.CreateBus("host=localhost:5672", s => s.EnableSystemTextJson());
-
-        ResponseMessage request = await bus.Rpc.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
-
-        return request;
     }
 
     [HttpPost("login")]
@@ -154,6 +147,25 @@ public class AuthController(
         };
 
         return response;
+    }
+
+    private async Task<ResponseMessage> RegistrarCliente(UsuarioRegistro usuarioRegistro)
+    {
+        IdentityUser? usuario = await UserManager.FindByEmailAsync(usuarioRegistro.Email);
+
+        ArgumentNullException.ThrowIfNull(usuario);
+
+        UsuarioRegistradoIntegrationEvent usuarioRegistrado = new(Guid.Parse(usuario.Id), usuarioRegistro.Nome, usuarioRegistro.Email, usuarioRegistro.Cpf);
+
+        try
+        {
+            return await Bus.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
+        }
+        catch
+        {
+            await UserManager.DeleteAsync(usuario);
+            throw;
+        }
     }
 
     private static long ToUnixEpochDate(DateTime date)

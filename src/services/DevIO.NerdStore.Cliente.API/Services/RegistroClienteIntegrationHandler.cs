@@ -1,25 +1,24 @@
 ﻿using DevIO.NerdStore.Clientes.API.Application.Commands;
 using DevIO.NerdStore.Core.Mediator;
 using DevIO.NerdStore.Core.Messages.Integration;
-using EasyNetQ;
+using DevIO.NerdStore.MessageBus;
 using FluentValidation.Results;
 
 namespace DevIO.NerdStore.Clientes.API.Services;
 
-public class RegistroClienteIntegrationHandler(IServiceProvider serviceProvider) : BackgroundService
+public class RegistroClienteIntegrationHandler(IServiceProvider serviceProvider, IMessageBus bus) : BackgroundService
 {
     private IServiceProvider ServiceProvider { get; } = serviceProvider;
+    private IMessageBus Bus { get; } = bus;
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        IBus bus = RabbitHutch.CreateBus("host=localhost:5672", s => s.EnableSystemTextJson());
-
-        bus.Rpc.RespondAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(async request => new ResponseMessage(await RegistrarCliente(request)), stoppingToken);
+        Bus.RespondAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(async request => await RegistrarCliente(request));
 
         return Task.CompletedTask;
     }
 
-    private async Task<ValidationResult> RegistrarCliente(UsuarioRegistradoIntegrationEvent message)
+    private async Task<ResponseMessage> RegistrarCliente(UsuarioRegistradoIntegrationEvent message)
     {
         RegistrarClienteCommand clienteCommand = new(message.Id, message.Nome, message.Email, message.Cpf);
 
@@ -32,6 +31,6 @@ public class RegistroClienteIntegrationHandler(IServiceProvider serviceProvider)
             resultado = await mediator.EnviarComando(clienteCommand);
         }
 
-        return resultado;
+        return new(resultado);
     }
 }
