@@ -17,13 +17,12 @@ namespace DevIO.NerdStore.Identity.API.Controllers;
 public class AuthController(
     UserManager<IdentityUser> userManager,
     SignInManager<IdentityUser> signInManager,
-    IOptions<AppSettings> appSettings,
-    IBus bus) : MainController
+    IOptions<AppSettings> appSettings) : MainController
 {
     private UserManager<IdentityUser> UserManager { get; } = userManager;
     private SignInManager<IdentityUser> SignInManager { get; } = signInManager;
     private AppSettings AppSettings { get; } = appSettings.Value;
-    private IBus Bus { get; set; } = bus;
+    private IBus? Bus { get; set; }
 
     [HttpPost("registrar")]
     public async Task<ActionResult> Registrar(UsuarioRegistro usuarioRegistro)
