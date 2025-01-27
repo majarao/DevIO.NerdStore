@@ -1,17 +1,29 @@
+using DevIO.NerdStore.Carrinho.API.Configuration;
+using DevIO.NerdStore.WebAPI.Core.Identity;
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddSwaggerGen();
+IConfigurationBuilder builderConfiguration = new ConfigurationBuilder()
+    .SetBasePath(builder.Environment.ContentRootPath)
+    .AddJsonFile("appsettings.json", true, true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true)
+    .AddEnvironmentVariables();
+
+if (builder.Environment.IsDevelopment())
+    builderConfiguration.AddUserSecrets<Program>();
+
+IConfiguration Configuration = builderConfiguration.Build();
+
+builder.Services
+    .AddApiConfiguration(Configuration)
+    .AddJwtConfiguration(Configuration)
+    .RegisterServices()
+    .AddSwaggerConfiguration();
 
 WebApplication app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
+app
+    .UseApiConfiguration(builder.Environment)
+    .UseSwaggerConfiguration();
 
 app.Run();
