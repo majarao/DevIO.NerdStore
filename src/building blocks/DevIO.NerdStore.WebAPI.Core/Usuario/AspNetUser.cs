@@ -1,8 +1,9 @@
-﻿using System.Security.Claims;
+﻿using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
-namespace DevIO.NerdStore.WebApp.MVC.Extensions;
+namespace DevIO.NerdStore.WebAPI.Core.Usuario;
 
-public class AspNetUser(IHttpContextAccessor accessor) : IUser
+public class AspNetUser(IHttpContextAccessor accessor) : IAspNetUser
 {
     private IHttpContextAccessor Accessor { get; } = accessor;
 

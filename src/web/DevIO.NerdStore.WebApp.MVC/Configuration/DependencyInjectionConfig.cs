@@ -1,4 +1,5 @@
-﻿using DevIO.NerdStore.WebApp.MVC.Extensions;
+﻿using DevIO.NerdStore.WebAPI.Core.Usuario;
+using DevIO.NerdStore.WebApp.MVC.Extensions;
 using DevIO.NerdStore.WebApp.MVC.Services;
 using DevIO.NerdStore.WebApp.MVC.Services.Handlers;
 using Microsoft.AspNetCore.Mvc.DataAnnotations;
@@ -26,7 +27,7 @@ public static class DependencyInjectionConfig
 
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-        services.AddScoped<IUser, AspNetUser>();
+        services.AddScoped<IAspNetUser, AspNetUser>();
 
         return services;
     }

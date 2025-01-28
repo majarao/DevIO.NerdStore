@@ -1,12 +1,12 @@
-﻿using DevIO.NerdStore.WebApp.MVC.Extensions;
+﻿using DevIO.NerdStore.WebAPI.Core.Usuario;
 using Microsoft.Extensions.Primitives;
 using System.Net.Http.Headers;
 
 namespace DevIO.NerdStore.WebApp.MVC.Services.Handlers;
 
-public class HttpClientAuthorizationDelegatingHandler(IUser user) : DelegatingHandler
+public class HttpClientAuthorizationDelegatingHandler(IAspNetUser user) : DelegatingHandler
 {
-    private IUser User { get; } = user;
+    private IAspNetUser User { get; } = user;
 
     protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {

@@ -1,8 +1,9 @@
-﻿using System.Security.Claims;
+﻿using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
-namespace DevIO.NerdStore.WebApp.MVC.Extensions;
+namespace DevIO.NerdStore.WebAPI.Core.Usuario;
 
-public interface IUser
+public interface IAspNetUser
 {
     string Name { get; }
 

@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace DevIO.NerdStore.WebApp.MVC.Extensions;
+namespace DevIO.NerdStore.WebAPI.Core.Usuario;
 
 public static class ClaimsPrincipalExtensions
 {
