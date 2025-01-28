@@ -1,4 +1,6 @@
-﻿using DevIO.NerdStore.WebAPI.Core.Identity;
+﻿using DevIO.NerdStore.Carrinho.API.Data;
+using DevIO.NerdStore.WebAPI.Core.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace DevIO.NerdStore.Carrinho.API.Configuration;
 
@@ -6,6 +8,9 @@ public static class ApiConfig
 {
     public static IServiceCollection AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddDbContext<CarrinhoContext>(options => 
+            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
         services.AddControllers();
 
         services.AddCors(options =>
