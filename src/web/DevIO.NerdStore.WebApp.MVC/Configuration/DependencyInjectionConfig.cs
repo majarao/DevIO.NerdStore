@@ -13,10 +13,15 @@ public static class DependencyInjectionConfig
     public static IServiceCollection RegisterServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton<IValidationAttributeAdapterProvider, CpfValidationAttributeAdapterProvider>();
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
         services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
 
-        services.AddHttpClient<IAutenticacaoService, AutenticacaoService>();
+        services.AddScoped<IAspNetUser, AspNetUser>();
+
+        services.AddHttpClient<IAutenticacaoService, AutenticacaoService>()
+            .AddPolicyHandler(PollyExtensions.EsperarTentar())
+            .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
         services
             .AddHttpClient("Catalogo", options => options.BaseAddress = new Uri(configuration.GetSection("CatalogoUrl").Value ?? string.Empty))
@@ -25,9 +30,11 @@ public static class DependencyInjectionConfig
             .AddPolicyHandler(PollyExtensions.EsperarTentar())
             .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
-        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-        services.AddScoped<IAspNetUser, AspNetUser>();
+        services
+            .AddHttpClient<ICarrinhoService, CarrinhoService>()
+            .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
+            .AddPolicyHandler(PollyExtensions.EsperarTentar())
+            .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
         return services;
     }

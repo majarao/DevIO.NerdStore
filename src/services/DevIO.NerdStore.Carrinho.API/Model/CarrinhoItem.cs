@@ -5,19 +5,17 @@ namespace DevIO.NerdStore.Carrinho.API.Model;
 
 public class CarrinhoItem
 {
-    public Guid Id { get; private set; }
-    public Guid ProdutoId { get; private set; }
-    public string Nome { get; private set; } = string.Empty;
-    public int Quantidade { get; private set; }
-    public decimal Valor { get; private set; }
-    public string Imagem { get; private set; } = string.Empty;
-    public Guid CarrinhoId { get; private set; }
-
-    public CarrinhoItem() =>
-        Id = Guid.NewGuid();
-
-    [JsonIgnore]
+    public Guid Id { get; set; }
+    public Guid ProdutoId { get; set; }
+    public string Nome { get; set; } = string.Empty;
+    public int Quantidade { get; set; }
+    public decimal Valor { get; set; }
+    public string Imagem { get; set; } = string.Empty;
+    public Guid CarrinhoId { get; set; }
     public CarrinhoCliente? CarrinhoCliente { get; set; }
+
+    [JsonConstructor]
+    protected CarrinhoItem() => Id = Guid.NewGuid();
 
     internal void AssociarCarrinho(Guid carrinhoId) => CarrinhoId = carrinhoId;
 

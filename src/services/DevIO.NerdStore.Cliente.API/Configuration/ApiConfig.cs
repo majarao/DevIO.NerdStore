@@ -1,6 +1,7 @@
 ﻿using DevIO.NerdStore.Clientes.API.Data;
 using DevIO.NerdStore.WebAPI.Core.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace DevIO.NerdStore.Clientes.API.Configuration;
 
@@ -11,7 +12,9 @@ public static class ApiConfig
         services.AddDbContext<ClientesContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-        services.AddControllers();
+        services.AddControllers()
+            .AddJsonOptions(options =>
+                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
         services.AddCors(options =>
         {

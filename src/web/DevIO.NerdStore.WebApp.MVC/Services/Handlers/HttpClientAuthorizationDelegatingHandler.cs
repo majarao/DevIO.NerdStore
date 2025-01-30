@@ -10,7 +10,7 @@ public class HttpClientAuthorizationDelegatingHandler(IAspNetUser user) : Delega
 
     protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        StringValues authorizationHeader = User.ObterHttpContext().Request.Headers.Authorization;
+        StringValues authorizationHeader = User.ObterHttpContext()?.Request.Headers.Authorization ?? [];
 
         if (!string.IsNullOrEmpty(authorizationHeader))
             request.Headers.Add("Authorization", [authorizationHeader]);

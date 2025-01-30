@@ -5,19 +5,19 @@ namespace DevIO.NerdStore.WebAPI.Core.Usuario;
 
 public interface IAspNetUser
 {
-    string Name { get; }
+    string? Name { get; }
 
-    Guid ObterUserId();
+    Guid? ObterUserId();
 
-    string ObterUserEmail();
+    string? ObterUserEmail();
 
-    string ObterUserToken();
+    string? ObterUserToken();
 
     bool EstaAutenticado();
 
     bool PossuiRole(string role);
 
-    IEnumerable<Claim> ObterClaims();
+    IEnumerable<Claim>? ObterClaims();
 
-    HttpContext ObterHttpContext();
+    HttpContext? ObterHttpContext();
 }

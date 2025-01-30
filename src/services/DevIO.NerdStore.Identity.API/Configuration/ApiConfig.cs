@@ -1,4 +1,5 @@
 ﻿using DevIO.NerdStore.WebAPI.Core.Identity;
+using System.Text.Json.Serialization;
 
 namespace DevIO.NerdStore.Identity.API.Configuration;
 
@@ -6,7 +7,9 @@ public static class ApiConfig
 {
     public static IServiceCollection AddApiConfiguration(this IServiceCollection services)
     {
-        services.AddControllers();
+        services.AddControllers()
+            .AddJsonOptions(options =>
+                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
         return services;
     }

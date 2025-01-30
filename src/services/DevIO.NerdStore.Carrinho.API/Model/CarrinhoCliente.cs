@@ -15,10 +15,13 @@ public class CarrinhoCliente
 
     protected CarrinhoCliente() { }
 
-    public CarrinhoCliente(Guid clienteId)
+    public CarrinhoCliente(Guid? clienteId)
     {
+        if (clienteId is null)
+            throw new ArgumentNullException(nameof(clienteId));
+
         Id = Guid.NewGuid();
-        ClienteId = clienteId;
+        ClienteId = (Guid)clienteId;
     }
 
     internal void AdicionarItem(CarrinhoItem item)

@@ -25,6 +25,7 @@ public static class JwtConfig
             })
             .AddJwtBearer(bearerOptions =>
             {
+                bearerOptions.MapInboundClaims = false;
                 bearerOptions.RequireHttpsMetadata = true;
                 bearerOptions.SaveToken = true;
                 bearerOptions.TokenValidationParameters =
