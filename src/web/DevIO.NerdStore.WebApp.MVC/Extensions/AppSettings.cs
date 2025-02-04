@@ -4,5 +4,5 @@ public class AppSettings
 {
     public string AutenticacaoUrl { get; set; } = string.Empty;
     public string CatalogoUrl { get; set; } = string.Empty;
-    public string CarrinhoUrl { get; set; } = string.Empty;
+    public string ComprasBFFUrl { get; set; } = string.Empty;
 }

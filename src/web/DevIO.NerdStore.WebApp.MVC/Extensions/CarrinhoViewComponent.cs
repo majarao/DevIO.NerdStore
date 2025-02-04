@@ -1,12 +1,11 @@
-﻿using DevIO.NerdStore.WebApp.MVC.Models;
-using DevIO.NerdStore.WebApp.MVC.Services;
+﻿using DevIO.NerdStore.WebApp.MVC.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevIO.NerdStore.WebApp.MVC.Extensions;
 
-public class CarrinhoViewComponent(ICarrinhoService carrinhoService) : ViewComponent
+public class CarrinhoViewComponent(IComprasBFFService bffService) : ViewComponent
 {
-    private ICarrinhoService CarrinhoService { get; } = carrinhoService;
+    private IComprasBFFService BFFService { get; } = bffService;
 
-    public async Task<IViewComponentResult> InvokeAsync() => View(await CarrinhoService.ObterCarrinho() ?? new CarrinhoViewModel());
+    public async Task<IViewComponentResult> InvokeAsync() => View(await BFFService.ObterQuantidadeCarrinho());
 }

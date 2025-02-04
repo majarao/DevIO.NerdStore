@@ -7,33 +7,21 @@ using Microsoft.AspNetCore.Mvc;
 namespace DevIO.NerdStore.WebApp.MVC.Controllers;
 
 [Authorize]
-public class CarrinhoController(ICarrinhoService carrinhoService, ICatalogoService catalogoService) : MainController
+public class CarrinhoController(IComprasBFFService carrinhoService) : MainController
 {
-    private ICarrinhoService CarrinhoService { get; } = carrinhoService;
-    private ICatalogoService CatalogoService { get; } = catalogoService;
+    private IComprasBFFService BFFService { get; } = carrinhoService;
 
     [Route("carrinho")]
-    public async Task<IActionResult> Index() => View(await CarrinhoService.ObterCarrinho());
+    public async Task<IActionResult> Index() => View(await BFFService.ObterCarrinho());
 
     [HttpPost]
     [Route("carrinho/adicionar-item")]
-    public async Task<IActionResult> AdicionarItemCarrinho(ItemProdutoViewModel itemProduto)
+    public async Task<IActionResult> AdicionarItemCarrinho(ItemCarrinhoViewModel itemCarrinho)
     {
-        ProdutoViewModel? produto = await CatalogoService.ObterPorId(itemProduto.ProdutoId);
-
-        ValidarItemCarrinho(produto, itemProduto.Quantidade);
-
-        if (!OperacaoValida())
-            return View("Index", await CarrinhoService.ObterCarrinho());
-
-        itemProduto.Nome = produto!.Nome;
-        itemProduto.Valor = produto.Valor;
-        itemProduto.Imagem = produto.Imagem;
-
-        ResponseResult? resposta = await CarrinhoService.AdicionarItemCarrinho(itemProduto);
+        ResponseResult? resposta = await BFFService.AdicionarItemCarrinho(itemCarrinho);
 
         if (ResponsePossuiErros(resposta))
-            return View("Index", await CarrinhoService.ObterCarrinho());
+            return View("Index", await BFFService.ObterCarrinho());
 
         return RedirectToAction("Index");
     }
@@ -42,19 +30,12 @@ public class CarrinhoController(ICarrinhoService carrinhoService, ICatalogoServi
     [Route("carrinho/atualizar-item")]
     public async Task<IActionResult> AtualizarItemCarrinho(Guid produtoId, int quantidade)
     {
-        ProdutoViewModel? produto = await CatalogoService.ObterPorId(produtoId);
+        ItemCarrinhoViewModel item = new() { ProdutoId = produtoId, Quantidade = quantidade };
 
-        ValidarItemCarrinho(produto, quantidade);
-
-        if (!OperacaoValida())
-            return View("Index", await CarrinhoService.ObterCarrinho());
-
-        ItemProdutoViewModel itemProduto = new() { ProdutoId = produtoId, Quantidade = quantidade };
-
-        ResponseResult? resposta = await CarrinhoService.AtualizarItemCarrinho(produtoId, itemProduto);
+        ResponseResult? resposta = await BFFService.AtualizarItemCarrinho(produtoId, item);
 
         if (ResponsePossuiErros(resposta))
-            return View("Index", await CarrinhoService.ObterCarrinho());
+            return View("Index", await BFFService.ObterCarrinho());
 
         return RedirectToAction("Index");
     }
@@ -63,32 +44,11 @@ public class CarrinhoController(ICarrinhoService carrinhoService, ICatalogoServi
     [Route("carrinho/remover-item")]
     public async Task<IActionResult> RemoverItemCarrinho(Guid produtoId)
     {
-        ProdutoViewModel? produto = await CatalogoService.ObterPorId(produtoId);
-
-        if (produto is null)
-        {
-            AdicionarErroValidacao("Produto inexistente!");
-
-            return View("Index", await CarrinhoService.ObterCarrinho());
-        }
-
-        ResponseResult? resposta = await CarrinhoService.RemoverItemCarrinho(produtoId);
+        ResponseResult? resposta = await BFFService.RemoverItemCarrinho(produtoId);
 
         if (ResponsePossuiErros(resposta))
-            return View("Index", await CarrinhoService.ObterCarrinho());
+            return View("Index", await BFFService.ObterCarrinho());
 
         return RedirectToAction("Index");
-    }
-
-    private void ValidarItemCarrinho(ProdutoViewModel? produto, int quantidade)
-    {
-        if (produto is null)
-            AdicionarErroValidacao("Produto inexistente!");
-
-        if (quantidade < 1)
-            AdicionarErroValidacao($"Escolha ao menos uma unidade do produto {produto!.Nome}");
-
-        if (quantidade > produto!.QuantidadeEstoque)
-            AdicionarErroValidacao($"O produto {produto.Nome} possui {produto.QuantidadeEstoque} unidades em estoque, você selecionou {quantidade}");
     }
 }
