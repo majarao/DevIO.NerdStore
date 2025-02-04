@@ -1,11 +1,8 @@
 ﻿using DevIO.NerdStore.BFF.Compras.Extensions;
+using DevIO.NerdStore.BFF.Compras.Models;
 using Microsoft.Extensions.Options;
 
 namespace DevIO.NerdStore.BFF.Compras.Services;
-
-public interface ICatalogoService
-{
-}
 
 public class CatalogoService : Service, ICatalogoService
 {
@@ -15,5 +12,14 @@ public class CatalogoService : Service, ICatalogoService
     {
         HttpClient = httpClient;
         HttpClient.BaseAddress = new Uri(settings.Value.CatalogoUrl);
+    }
+
+    public async Task<ItemProdutoDTO?> ObterPorId(Guid id)
+    {
+        HttpResponseMessage response = await HttpClient.GetAsync($"/catalogo/produtos/{id}");
+
+        TratarErrosResponse(response);
+
+        return await DeserializarObjetoResponse<ItemProdutoDTO>(response);
     }
 }

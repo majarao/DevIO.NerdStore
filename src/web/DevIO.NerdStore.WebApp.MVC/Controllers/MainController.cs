@@ -1,4 +1,4 @@
-﻿using DevIO.NerdStore.WebApp.MVC.Models;
+﻿using DevIO.NerdStore.Core.Communication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevIO.NerdStore.WebApp.MVC.Controllers;

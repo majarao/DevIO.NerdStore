@@ -1,4 +1,5 @@
-﻿using DevIO.NerdStore.WebApp.MVC.Extensions;
+﻿using DevIO.NerdStore.Core.Communication;
+using DevIO.NerdStore.WebApp.MVC.Extensions;
 using DevIO.NerdStore.WebApp.MVC.Models;
 using Microsoft.Extensions.Options;
 

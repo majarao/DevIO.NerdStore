@@ -1,4 +1,5 @@
-﻿using DevIO.NerdStore.WebApp.MVC.Models;
+﻿using DevIO.NerdStore.Core.Communication;
+using DevIO.NerdStore.WebApp.MVC.Models;
 using DevIO.NerdStore.WebApp.MVC.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

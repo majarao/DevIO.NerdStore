@@ -1,4 +1,5 @@
-﻿using FluentValidation.Results;
+﻿using DevIO.NerdStore.Core.Communication;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -45,4 +46,23 @@ public abstract class MainController : Controller
     protected void AdicionarErroProcessamento(string erro) => Erros.Add(erro);
 
     protected void LimparErroProcessamento() => Erros.Clear();
+
+    protected bool ResponsePossuiErros(ResponseResult? resposta)
+    {
+        if (resposta is null || resposta.Errors.Mensagens.Count == 0)
+            return false;
+
+        foreach (string mensagem in resposta.Errors.Mensagens)
+            AdicionarErroProcessamento(mensagem);
+
+        return true;
+    }
+
+    protected ActionResult CustomResponse(ResponseResult? resposta)
+    {
+        ResponsePossuiErros(resposta);
+
+        return CustomResponse();
+    }
+
 }

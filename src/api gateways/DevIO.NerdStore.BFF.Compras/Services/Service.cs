@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using DevIO.NerdStore.Core.Communication;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 
@@ -37,6 +38,9 @@ public abstract class Service
             return false;
 
         response.EnsureSuccessStatusCode();
+
         return true;
     }
+
+    protected ResponseResult RetornoOk() => new();
 }
