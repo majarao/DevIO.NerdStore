@@ -57,6 +57,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "compras", "compras", "{F75E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.BFF.Compras", "src\api gateways\DevIO.NerdStore.BFF.Compras\DevIO.NerdStore.BFF.Compras.csproj", "{5C4AB7BB-287E-411B-8FBA-9EC4C30491B9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Pedido.Domain", "src\services\DevIO.NerdStore.Pedido.Domain\DevIO.NerdStore.Pedido.Domain.csproj", "{191A22CD-54D4-482F-9D6A-81B4087B14A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Pedido.Infra", "src\services\DevIO.NerdStore.Pedido.Infra\DevIO.NerdStore.Pedido.Infra.csproj", "{424B5B6B-D004-4BA1-88DB-FF4C6658D46C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +111,14 @@ Global
 		{5C4AB7BB-287E-411B-8FBA-9EC4C30491B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C4AB7BB-287E-411B-8FBA-9EC4C30491B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C4AB7BB-287E-411B-8FBA-9EC4C30491B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{191A22CD-54D4-482F-9D6A-81B4087B14A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{191A22CD-54D4-482F-9D6A-81B4087B14A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{191A22CD-54D4-482F-9D6A-81B4087B14A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{191A22CD-54D4-482F-9D6A-81B4087B14A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{424B5B6B-D004-4BA1-88DB-FF4C6658D46C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{424B5B6B-D004-4BA1-88DB-FF4C6658D46C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{424B5B6B-D004-4BA1-88DB-FF4C6658D46C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{424B5B6B-D004-4BA1-88DB-FF4C6658D46C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -138,5 +150,7 @@ Global
 		{E52CCF70-EEDD-4E6A-8D36-326672B6EB77} = {325A67B2-1F05-4AFC-A85A-EDE24215AF39}
 		{F75E96F7-1016-4FBD-A881-E44C327C50F8} = {E52CCF70-EEDD-4E6A-8D36-326672B6EB77}
 		{5C4AB7BB-287E-411B-8FBA-9EC4C30491B9} = {F75E96F7-1016-4FBD-A881-E44C327C50F8}
+		{191A22CD-54D4-482F-9D6A-81B4087B14A6} = {D249FA84-46F0-4E79-B54B-50CF861A14B7}
+		{424B5B6B-D004-4BA1-88DB-FF4C6658D46C} = {D249FA84-46F0-4E79-B54B-50CF861A14B7}
 	EndGlobalSection
 EndGlobal
