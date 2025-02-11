@@ -7,7 +7,7 @@ public static class MessageBusConfig
 {
     public static IServiceCollection AddMessageBusConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
-        string? connectionString = configuration.GetMessageQueueConnnection("MessageBus");
+        string? connectionString = configuration.GetMessageQueueConnection("MessageBus");
 
         ArgumentNullException.ThrowIfNull(connectionString);
 

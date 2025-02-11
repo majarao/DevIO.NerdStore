@@ -4,6 +4,6 @@ namespace DevIO.NerdStore.Core.Utils;
 
 public static class ConfigurationExtensions
 {
-    public static string? GetMessageQueueConnnection(this IConfiguration configuration, string name) =>
+    public static string? GetMessageQueueConnection(this IConfiguration configuration, string name) =>
         configuration?.GetSection("MessageQueueConnnection")?[name];
 }

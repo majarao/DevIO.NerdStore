@@ -1,8 +1,7 @@
-﻿using DevIO.NerdStore.Clientes.API.Services;
-using DevIO.NerdStore.Core.Utils;
+﻿using DevIO.NerdStore.Core.Utils;
 using DevIO.NerdStore.MessageBus;
 
-namespace DevIO.NerdStore.Clientes.API.Configuration;
+namespace DevIO.NerdStore.Pedido.API.Configuration;
 
 public static class MessageBusConfig
 {
@@ -13,8 +12,7 @@ public static class MessageBusConfig
         ArgumentNullException.ThrowIfNull(connectionString);
 
         services
-            .AddMessageBus(connectionString)
-            .AddHostedService<RegistroClienteIntegrationHandler>();
+            .AddMessageBus(connectionString);
 
         return services;
     }

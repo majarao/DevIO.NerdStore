@@ -1,17 +1,20 @@
 ﻿using DevIO.NerdStore.Core.Data;
 using DevIO.NerdStore.Core.Mediator;
 using DevIO.NerdStore.Core.Messages;
+using DevIO.NerdStore.Pedido.Domain.Vouchers;
+using DevIO.NerdStore.Pedido.Infra.Extensions;
 using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using DevIO.NerdStore.Pedido.Infra.Extensions;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DevIO.NerdStore.Pedido.Infra.Data;
 
 public class PedidosContext(DbContextOptions<PedidosContext> options, IMediatorHandler mediator) : DbContext(options), IUnitOfWork
 {
     private IMediatorHandler Mediator { get; } = mediator;
+
+    public DbSet<Voucher> Vouchers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

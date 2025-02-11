@@ -11,7 +11,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.1" >
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>      
@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\building blocks\DevIO.NerdStore.Core\DevIO.NerdStore.Core.csproj" />
+    <ProjectReference Include="..\DevIO.NerdStore.Pedido.Domain\DevIO.NerdStore.Pedido.Domain.csproj" />
   </ItemGroup>
 
 </Project>

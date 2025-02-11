@@ -1,5 +1,6 @@
 using DevIO.NerdStore.Pedido.API.Configuration;
 using DevIO.NerdStore.WebAPI.Core.Identity;
+using System.Reflection;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -13,12 +14,13 @@ if (builder.Environment.IsDevelopment())
     builderConfiguration.AddUserSecrets<Program>();
 
 IConfiguration Configuration = builderConfiguration.Build();
-
 builder.Services
+    .AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()))
     .AddApiConfiguration(Configuration)
     .AddJwtConfiguration(Configuration)
     .RegisterServices()
-    .AddSwaggerConfiguration();
+    .AddSwaggerConfiguration()
+    .AddMessageBusConfiguration(Configuration);
 
 WebApplication app = builder.Build();
 

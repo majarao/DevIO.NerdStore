@@ -1,8 +1,8 @@
-﻿using DevIO.NerdStore.Core.Mediator;
+﻿using DevIO.NerdStore.Core.DomainObjects;
+using DevIO.NerdStore.Core.Mediator;
 using DevIO.NerdStore.Core.Messages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using DevIO.NerdStore.Core.DomainObjects;
 
 namespace DevIO.NerdStore.Pedido.Infra.Extensions;
 
