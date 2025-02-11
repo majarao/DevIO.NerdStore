@@ -1,4 +1,5 @@
 ﻿using DevIO.NerdStore.Core.Mediator;
+using DevIO.NerdStore.Pedido.API.Application.Queries;
 using DevIO.NerdStore.Pedido.Domain.Vouchers;
 using DevIO.NerdStore.Pedido.Infra.Data;
 using DevIO.NerdStore.Pedido.Infra.Data.Repository;
@@ -10,6 +11,8 @@ public static class DependencyInjectionConfig
 {
     public static IServiceCollection RegisterServices(this IServiceCollection services)
     {
+        services.AddScoped<PedidosContext>();
+
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddScoped<IAspNetUser, AspNetUser>();
 
@@ -17,7 +20,7 @@ public static class DependencyInjectionConfig
 
         services.AddScoped<IVoucherRepository, VoucherRepository>();
 
-        services.AddScoped<PedidosContext>();
+        services.AddScoped<IVoucherQueries, VoucherQueries>();
 
         return services;
     }

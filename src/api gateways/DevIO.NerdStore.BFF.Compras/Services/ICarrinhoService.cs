@@ -12,4 +12,6 @@ public interface ICarrinhoService
     Task<ResponseResult?> AtualizarItemCarrinho(Guid produtoId, ItemCarrinhoDTO carrinho);
 
     Task<ResponseResult?> RemoverItemCarrinho(Guid produtoId);
+
+    Task<ResponseResult?> AplicarVoucherCarrinho(VoucherDTO voucher);
 }

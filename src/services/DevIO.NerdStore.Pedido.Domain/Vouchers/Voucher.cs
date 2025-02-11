@@ -36,7 +36,7 @@ public class Voucher : Entity, IAggregateRoot
     {
         Quantidade -= 1;
 
-        if (Quantidade >= 1) 
+        if (Quantidade >= 1)
             return;
 
         MarcarComoUtilizado();

@@ -6,10 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DevIO.NerdStore.BFF.Compras.Controllers;
 
-public class CarrinhoController(ICarrinhoService carrinhoService, ICatalogoService catalogoService) : MainController
+public class CarrinhoController(ICarrinhoService carrinhoService, ICatalogoService catalogoService, IPedidoService pedidoService) : MainController
 {
     private ICarrinhoService CarrinhoService { get; } = carrinhoService;
     private ICatalogoService CatalogoService { get; } = catalogoService;
+    private IPedidoService PedidoService { get; } = pedidoService;
 
     [HttpGet]
     [Route("compras/carrinho")]
@@ -74,6 +75,23 @@ public class CarrinhoController(ICarrinhoService carrinhoService, ICatalogoServi
         }
 
         ResponseResult? resposta = await CarrinhoService.RemoverItemCarrinho(produtoId);
+
+        return CustomResponse(resposta);
+    }
+
+    [HttpPost]
+    [Route("compras/carrinho/aplicar-voucher")]
+    public async Task<IActionResult> AplicarVoucher([FromBody] string voucherCodigo)
+    {
+        VoucherDTO? voucher = await PedidoService.ObterVoucherPorCodigo(voucherCodigo);
+
+        if (voucher is null)
+        {
+            AdicionarErroProcessamento("Voucher inválido ou não encontrado!");
+            return CustomResponse();
+        }
+
+        ResponseResult? resposta = await CarrinhoService.AplicarVoucherCarrinho(voucher);
 
         return CustomResponse(resposta);
     }

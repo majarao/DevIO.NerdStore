@@ -56,4 +56,16 @@ public class CarrinhoService : Service, ICarrinhoService
 
         return RetornoOk();
     }
+
+    public async Task<ResponseResult?> AplicarVoucherCarrinho(VoucherDTO voucher)
+    {
+        StringContent itemContent = ObterConteudo(voucher);
+
+        HttpResponseMessage response = await HttpClient.PostAsync("/carrinho/aplicar-voucher/", itemContent);
+
+        if (!TratarErrosResponse(response))
+            return await DeserializarObjetoResponse<ResponseResult>(response);
+
+        return RetornoOk();
+    }
 }
