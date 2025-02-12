@@ -4,6 +4,7 @@ using DevIO.NerdStore.WebAPI.Core.Controllers;
 using DevIO.NerdStore.WebAPI.Core.Usuario;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Polly;
 
 namespace DevIO.NerdStore.Carrinho.API.Controllers;
 
@@ -74,6 +75,24 @@ public class CarrinhoController(IAspNetUser user, CarrinhoContext context) : Mai
         carrinho!.RemoverItem(itemCarrinho);
 
         Context.CarrinhoItens.Remove(itemCarrinho);
+        Context.CarrinhoCliente.Update(carrinho);
+
+        await PersistirDados();
+
+        return CustomResponse();
+    }
+
+    [HttpPost]
+    [Route("carrinho/aplicar-voucher")]
+    public async Task<IActionResult> AplicarVoucher(Voucher voucher)
+    {
+        CarrinhoCliente? carrinho = await ObterCarrinhoCliente();
+
+        if (carrinho is null)
+            return CustomResponse();
+
+        carrinho.AplicarVoucher(voucher);
+
         Context.CarrinhoCliente.Update(carrinho);
 
         await PersistirDados();

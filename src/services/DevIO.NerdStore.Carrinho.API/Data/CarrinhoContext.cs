@@ -31,6 +31,24 @@ public class CarrinhoContext : DbContext
             .WithOne(i => i.CarrinhoCliente)
             .HasForeignKey(c => c.CarrinhoId);
 
+        modelBuilder.Entity<CarrinhoCliente>()
+            .Ignore(c => c.Voucher)
+            .OwnsOne(c => c.Voucher, v =>
+            {
+                v.Property(vc => vc.Codigo)
+                    .HasColumnName("VoucherCodigo")
+                    .HasColumnType("varchar(50)");
+
+                v.Property(vc => vc.TipoDesconto)
+                    .HasColumnName("TipoDesconto");
+
+                v.Property(vc => vc.Percentual)
+                    .HasColumnName("Percentual");
+
+                v.Property(vc => vc.ValorDesconto)
+                    .HasColumnName("ValorDesconto");
+            });
+
         foreach (IMutableForeignKey? relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
     }
