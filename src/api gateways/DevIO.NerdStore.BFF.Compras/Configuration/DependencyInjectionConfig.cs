@@ -19,14 +19,17 @@ public static class DependencyInjectionConfig
         services.AddHttpClient<ICatalogoService, CatalogoService>()
             .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
             .AddPolicyHandler(PollyExtensions.EsperarTentar())
-            .AddTransientHttpErrorPolicy(
-                p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+            .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
         services.AddHttpClient<ICarrinhoService, CarrinhoService>()
             .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
             .AddPolicyHandler(PollyExtensions.EsperarTentar())
-            .AddTransientHttpErrorPolicy(
-                p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+            .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+
+        services.AddHttpClient<IPedidoService, PedidoService>()
+            .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
+            .AddPolicyHandler(PollyExtensions.EsperarTentar())
+            .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
         return services;
     }

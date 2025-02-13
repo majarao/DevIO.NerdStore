@@ -51,4 +51,16 @@ public class CarrinhoController(IComprasBFFService carrinhoService) : MainContro
 
         return RedirectToAction("Index");
     }
+
+    [HttpPost]
+    [Route("carrinho/aplicar-voucher")]
+    public async Task<IActionResult> AplicarVoucher(string voucherCodigo)
+    {
+        ResponseResult? resposta = await BFFService.AplicarVoucherCarrinho(voucherCodigo);
+
+        if (ResponsePossuiErros(resposta))
+            return View("Index", await BFFService.ObterCarrinho());
+
+        return RedirectToAction("Index");
+    }
 }

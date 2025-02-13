@@ -1,5 +1,6 @@
 ﻿using DevIO.NerdStore.Core.Communication;
 using DevIO.NerdStore.WebApp.MVC.Extensions;
+using Microsoft.Extensions.Options;
 using System.Text;
 using System.Text.Json;
 
@@ -20,18 +21,9 @@ public abstract class Service
     protected static StringContent ObterConteudo(object dado) =>
         new(JsonSerializer.Serialize(dado), Encoding.UTF8, "application/json");
 
-    protected async Task<T?> DeserializarObjetoResponse<T>(HttpResponseMessage? responseMessage)
-    {
-        if (responseMessage is not null && responseMessage.Content is not null)
-        {
-            string content = await responseMessage.Content.ReadAsStringAsync();
-            if (!string.IsNullOrWhiteSpace(content))
-                return JsonSerializer.Deserialize<T>(content, JsonSerializerOptions);
-        }
-
-        return default;
-    }
-
+    protected async Task<T?> DeserializarObjetoResponse<T>(HttpResponseMessage responseMessage) => 
+        JsonSerializer.Deserialize<T>(await responseMessage.Content.ReadAsStringAsync(), JsonSerializerOptions);
+    
     protected static bool TratarErrosResponse(HttpResponseMessage response)
     {
         switch ((int)response.StatusCode)

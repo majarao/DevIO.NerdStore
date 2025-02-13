@@ -45,9 +45,9 @@ public static class JwtConfig
 
     public static IApplicationBuilder UseAuthConfiguration(this IApplicationBuilder app)
     {
-        app.UseAuthorization();
-
         app.UseAuthentication();
+
+        app.UseAuthorization();
 
         return app;
     }

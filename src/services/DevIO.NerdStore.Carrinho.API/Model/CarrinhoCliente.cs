@@ -99,7 +99,7 @@ public class CarrinhoCliente
         decimal desconto = 0;
         decimal valor = ValorTotal;
 
-        if (Voucher.TipoDesconto == TipoDescontoVoucher.Porcentagem)
+        if (Voucher?.TipoDesconto == TipoDescontoVoucher.Porcentagem)
         {
             if (Voucher.Percentual > 0)
             {
@@ -109,7 +109,7 @@ public class CarrinhoCliente
         }
         else
         {
-            if (Voucher.ValorDesconto > 0)
+            if (Voucher?.ValorDesconto > 0)
             {
                 desconto = Voucher.ValorDesconto;
                 valor -= desconto;

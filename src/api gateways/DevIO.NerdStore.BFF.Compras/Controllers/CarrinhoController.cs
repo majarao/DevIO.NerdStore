@@ -2,10 +2,12 @@
 using DevIO.NerdStore.BFF.Compras.Services;
 using DevIO.NerdStore.Core.Communication;
 using DevIO.NerdStore.WebAPI.Core.Controllers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevIO.NerdStore.BFF.Compras.Controllers;
 
+[Authorize]
 public class CarrinhoController(ICarrinhoService carrinhoService, ICatalogoService catalogoService, IPedidoService pedidoService) : MainController
 {
     private ICarrinhoService CarrinhoService { get; } = carrinhoService;

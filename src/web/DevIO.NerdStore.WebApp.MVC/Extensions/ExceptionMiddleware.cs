@@ -1,5 +1,4 @@
 ﻿using Polly.CircuitBreaker;
-using Refit;
 using System.Net;
 
 namespace DevIO.NerdStore.WebApp.MVC.Extensions;
@@ -15,14 +14,6 @@ public class ExceptionMiddleware(RequestDelegate next)
             await Next(httpContext);
         }
         catch (CustomHttpRequestException ex)
-        {
-            HandleRequestExceptionAsync(httpContext, ex.StatusCode);
-        }
-        catch (ValidationApiException ex)
-        {
-            HandleRequestExceptionAsync(httpContext, ex.StatusCode);
-        }
-        catch (ApiException ex)
         {
             HandleRequestExceptionAsync(httpContext, ex.StatusCode);
         }

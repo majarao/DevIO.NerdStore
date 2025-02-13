@@ -14,4 +14,6 @@ public interface IComprasBFFService
     Task<ResponseResult?> AtualizarItemCarrinho(Guid produtoId, ItemCarrinhoViewModel produto);
 
     Task<ResponseResult?> RemoverItemCarrinho(Guid produtoId);
+
+    Task<ResponseResult?> AplicarVoucherCarrinho(string voucher);
 }
