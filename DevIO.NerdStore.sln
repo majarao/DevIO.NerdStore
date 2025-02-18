@@ -31,7 +31,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cliente", "cliente", "{8B2A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pagamento", "pagamento", "{A1201300-A792-42F9-AC3D-6919C7BE1DF3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pedido", "pedido", "{D249FA84-46F0-4E79-B54B-50CF861A14B7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pedidos", "pedidos", "{D249FA84-46F0-4E79-B54B-50CF861A14B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Carrinho.API", "src\services\DevIO.NerdStore.Carrinho.API\DevIO.NerdStore.Carrinho.API.csproj", "{3F4E9BFA-7EBB-434C-BB7E-63A435AD9A5B}"
 EndProject
@@ -41,7 +41,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Clientes.AP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Pagamento.API", "src\services\DevIO.NerdStore.Pagamento.API\DevIO.NerdStore.Pagamento.API.csproj", "{05C4F037-1F63-4D88-A517-CBACF40A122B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Pedido.API", "src\services\DevIO.NerdStore.Pedido.API\DevIO.NerdStore.Pedido.API.csproj", "{4EB94112-C4C0-41C2-BD62-A047BE44E9A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Pedidos.API", "src\services\DevIO.NerdStore.Pedidos.API\DevIO.NerdStore.Pedidos.API.csproj", "{4EB94112-C4C0-41C2-BD62-A047BE44E9A6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{13F54F4B-21B5-415B-BB06-20FA749F0B79}"
 EndProject
@@ -57,9 +57,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "compras", "compras", "{F75E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.BFF.Compras", "src\api gateways\DevIO.NerdStore.BFF.Compras\DevIO.NerdStore.BFF.Compras.csproj", "{5C4AB7BB-287E-411B-8FBA-9EC4C30491B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Pedido.Domain", "src\services\DevIO.NerdStore.Pedido.Domain\DevIO.NerdStore.Pedido.Domain.csproj", "{191A22CD-54D4-482F-9D6A-81B4087B14A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Pedidos.Domain", "src\services\DevIO.NerdStore.Pedidos.Domain\DevIO.NerdStore.Pedidos.Domain.csproj", "{191A22CD-54D4-482F-9D6A-81B4087B14A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Pedido.Infra", "src\services\DevIO.NerdStore.Pedido.Infra\DevIO.NerdStore.Pedido.Infra.csproj", "{424B5B6B-D004-4BA1-88DB-FF4C6658D46C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Pedido.Infra", "src\services\DevIO.NerdStore.Pedidos.Infra\DevIO.NerdStore.Pedidos.Infra.csproj", "{424B5B6B-D004-4BA1-88DB-FF4C6658D46C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

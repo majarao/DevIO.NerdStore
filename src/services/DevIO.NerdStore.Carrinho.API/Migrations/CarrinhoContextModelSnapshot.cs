@@ -8,129 +8,128 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DevIO.NerdStore.Carrinho.API.Migrations
+namespace DevIO.NerdStore.Carrinho.API.Migrations;
+
+[DbContext(typeof(CarrinhoContext))]
+partial class CarrinhoContextModelSnapshot : ModelSnapshot
 {
-    [DbContext(typeof(CarrinhoContext))]
-    partial class CarrinhoContextModelSnapshot : ModelSnapshot
+    protected override void BuildModel(ModelBuilder modelBuilder)
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
-        {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.1")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+        modelBuilder
+            .HasAnnotation("ProductVersion", "9.0.1")
+            .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+        SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DevIO.NerdStore.Carrinho.API.Model.CarrinhoCliente", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("DevIO.NerdStore.Carrinho.API.Model.CarrinhoCliente", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ClienteId")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid>("ClienteId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("Desconto")
-                        .HasColumnType("decimal(18,2)");
+                b.Property<decimal>("Desconto")
+                    .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("ValorTotal")
-                        .HasColumnType("decimal(18,2)");
+                b.Property<decimal>("ValorTotal")
+                    .HasColumnType("decimal(18,2)");
 
-                    b.Property<bool>("VoucherUtilizado")
-                        .HasColumnType("bit");
+                b.Property<bool>("VoucherUtilizado")
+                    .HasColumnType("bit");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex(new[] { "ClienteId" }, "IDX_Cliente");
+                b.HasIndex(new[] { "ClienteId" }, "IDX_Cliente");
 
-                    b.ToTable("CarrinhoCliente");
-                });
+                b.ToTable("CarrinhoCliente");
+            });
 
-            modelBuilder.Entity("DevIO.NerdStore.Carrinho.API.Model.CarrinhoItem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("DevIO.NerdStore.Carrinho.API.Model.CarrinhoItem", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CarrinhoId")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid>("CarrinhoId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Imagem")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)");
+                b.Property<string>("Imagem")
+                    .IsRequired()
+                    .HasColumnType("varchar(100)");
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)");
+                b.Property<string>("Nome")
+                    .IsRequired()
+                    .HasColumnType("varchar(100)");
 
-                    b.Property<Guid>("ProdutoId")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid>("ProdutoId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Quantidade")
-                        .HasColumnType("int");
+                b.Property<int>("Quantidade")
+                    .HasColumnType("int");
 
-                    b.Property<decimal>("Valor")
-                        .HasColumnType("decimal(18,2)");
+                b.Property<decimal>("Valor")
+                    .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("CarrinhoId");
+                b.HasIndex("CarrinhoId");
 
-                    b.ToTable("CarrinhoItens");
-                });
+                b.ToTable("CarrinhoItens");
+            });
 
-            modelBuilder.Entity("DevIO.NerdStore.Carrinho.API.Model.CarrinhoCliente", b =>
-                {
-                    b.OwnsOne("DevIO.NerdStore.Carrinho.API.Model.Voucher", "Voucher", b1 =>
-                        {
-                            b1.Property<Guid>("CarrinhoClienteId")
-                                .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("DevIO.NerdStore.Carrinho.API.Model.CarrinhoCliente", b =>
+            {
+                b.OwnsOne("DevIO.NerdStore.Carrinho.API.Model.Voucher", "Voucher", b1 =>
+                    {
+                        b1.Property<Guid>("CarrinhoClienteId")
+                            .HasColumnType("uniqueidentifier");
 
-                            b1.Property<string>("Codigo")
-                                .IsRequired()
-                                .HasColumnType("varchar(50)")
-                                .HasColumnName("VoucherCodigo");
+                        b1.Property<string>("Codigo")
+                            .IsRequired()
+                            .HasColumnType("varchar(50)")
+                            .HasColumnName("VoucherCodigo");
 
-                            b1.Property<decimal>("Percentual")
-                                .HasColumnType("decimal(18,2)")
-                                .HasColumnName("Percentual");
+                        b1.Property<decimal>("Percentual")
+                            .HasColumnType("decimal(18,2)")
+                            .HasColumnName("Percentual");
 
-                            b1.Property<int>("TipoDesconto")
-                                .HasColumnType("int")
-                                .HasColumnName("TipoDesconto");
+                        b1.Property<int>("TipoDesconto")
+                            .HasColumnType("int")
+                            .HasColumnName("TipoDesconto");
 
-                            b1.Property<decimal>("ValorDesconto")
-                                .HasColumnType("decimal(18,2)")
-                                .HasColumnName("ValorDesconto");
+                        b1.Property<decimal>("ValorDesconto")
+                            .HasColumnType("decimal(18,2)")
+                            .HasColumnName("ValorDesconto");
 
-                            b1.HasKey("CarrinhoClienteId");
+                        b1.HasKey("CarrinhoClienteId");
 
-                            b1.ToTable("CarrinhoCliente");
+                        b1.ToTable("CarrinhoCliente");
 
-                            b1.WithOwner()
-                                .HasForeignKey("CarrinhoClienteId");
-                        });
+                        b1.WithOwner()
+                            .HasForeignKey("CarrinhoClienteId");
+                    });
 
-                    b.Navigation("Voucher")
-                        .IsRequired();
-                });
+                b.Navigation("Voucher")
+                    .IsRequired();
+            });
 
-            modelBuilder.Entity("DevIO.NerdStore.Carrinho.API.Model.CarrinhoItem", b =>
-                {
-                    b.HasOne("DevIO.NerdStore.Carrinho.API.Model.CarrinhoCliente", "CarrinhoCliente")
-                        .WithMany("Itens")
-                        .HasForeignKey("CarrinhoId")
-                        .IsRequired();
+        modelBuilder.Entity("DevIO.NerdStore.Carrinho.API.Model.CarrinhoItem", b =>
+            {
+                b.HasOne("DevIO.NerdStore.Carrinho.API.Model.CarrinhoCliente", "CarrinhoCliente")
+                    .WithMany("Itens")
+                    .HasForeignKey("CarrinhoId")
+                    .IsRequired();
 
-                    b.Navigation("CarrinhoCliente");
-                });
+                b.Navigation("CarrinhoCliente");
+            });
 
-            modelBuilder.Entity("DevIO.NerdStore.Carrinho.API.Model.CarrinhoCliente", b =>
-                {
-                    b.Navigation("Itens");
-                });
+        modelBuilder.Entity("DevIO.NerdStore.Carrinho.API.Model.CarrinhoCliente", b =>
+            {
+                b.Navigation("Itens");
+            });
 #pragma warning restore 612, 618
-        }
     }
 }
