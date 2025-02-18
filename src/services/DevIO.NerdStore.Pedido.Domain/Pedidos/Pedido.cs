@@ -1,8 +1,9 @@
-﻿using DevIO.NerdStore.Pedido.Domain.Vouchers;
+﻿using DevIO.NerdStore.Core.DomainObjects;
+using DevIO.NerdStore.Pedido.Domain.Vouchers;
 
 namespace DevIO.NerdStore.Pedido.Domain.Pedidos;
 
-public class Pedido
+public class Pedido : Entity, IAggregateRoot
 {
     public int Codigo { get; private set; }
     public Guid ClienteId { get; private set; }
@@ -56,7 +57,7 @@ public class Pedido
 
     public void CalcularValorTotalDesconto()
     {
-        if (!VoucherUtilizado) 
+        if (!VoucherUtilizado)
             return;
 
         decimal desconto = 0;

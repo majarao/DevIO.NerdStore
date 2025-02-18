@@ -1,6 +1,8 @@
-﻿namespace DevIO.NerdStore.Pedido.Domain.Pedidos;
+﻿using DevIO.NerdStore.Core.DomainObjects;
 
-public class PedidoItem
+namespace DevIO.NerdStore.Pedido.Domain.Pedidos;
+
+public class PedidoItem : Entity
 {
     public Guid PedidoId { get; private set; }
     public Guid ProdutoId { get; private set; }
@@ -14,10 +16,10 @@ public class PedidoItem
     protected PedidoItem() { }
 
     public PedidoItem(
-        Guid produtoId, 
-        string produtoNome, 
+        Guid produtoId,
+        string produtoNome,
         int quantidade,
-        decimal valorUnitario, 
+        decimal valorUnitario,
         string? produtoImagem = null)
     {
         ProdutoId = produtoId;

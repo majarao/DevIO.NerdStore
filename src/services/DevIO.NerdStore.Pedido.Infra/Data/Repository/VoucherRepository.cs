@@ -13,5 +13,5 @@ public class VoucherRepository(PedidosContext context) : IVoucherRepository
     public async Task<Voucher?> ObterVoucherPorCodigo(string codigo) =>
         await Context.Vouchers.FirstOrDefaultAsync(p => p.Codigo == codigo);
 
-    public void Dispose() => Context.Dispose();
+    public void Dispose() => GC.SuppressFinalize(this);
 }

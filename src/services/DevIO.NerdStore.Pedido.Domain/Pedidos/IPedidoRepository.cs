@@ -1,8 +1,10 @@
-﻿namespace DevIO.NerdStore.Pedido.Domain.Pedidos;
+﻿using DevIO.NerdStore.Core.Data;
 
-public interface IPedidoRepository
+namespace DevIO.NerdStore.Pedido.Domain.Pedidos;
+
+public interface IPedidoRepository : IRepository<Pedido>
 {
-    Task<Pedido> ObterPorId(Guid id);
+    Task<Pedido?> ObterPorId(Guid id);
 
     Task<IEnumerable<Pedido>> ObterListaPorClienteId(Guid clienteId);
 
@@ -10,7 +12,7 @@ public interface IPedidoRepository
 
     void Atualizar(Pedido pedido);
 
-    Task<PedidoItem> ObterItemPorId(Guid id);
+    Task<PedidoItem?> ObterItemPorId(Guid id);
 
-    Task<PedidoItem> ObterItemPorPedido(Guid pedidoId, Guid produtoId);
+    Task<PedidoItem?> ObterItemPorPedido(Guid pedidoId, Guid produtoId);
 }

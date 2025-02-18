@@ -1,6 +1,7 @@
 ﻿using DevIO.NerdStore.Core.Data;
 using DevIO.NerdStore.Core.Mediator;
 using DevIO.NerdStore.Core.Messages;
+using DevIO.NerdStore.Pedido.Domain.Pedidos;
 using DevIO.NerdStore.Pedido.Domain.Vouchers;
 using DevIO.NerdStore.Pedido.Infra.Extensions;
 using FluentValidation.Results;
@@ -14,6 +15,8 @@ public class PedidosContext(DbContextOptions<PedidosContext> options, IMediatorH
 {
     private IMediatorHandler Mediator { get; } = mediator;
 
+    public DbSet<Domain.Pedidos.Pedido> Pedidos { get; set; }
+    public DbSet<PedidoItem> PedidoItems { get; set; }
     public DbSet<Voucher> Vouchers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
