@@ -1,6 +1,7 @@
 ﻿using DevIO.NerdStore.Core.Data;
 using DevIO.NerdStore.Pedidos.Domain.Pedidos;
 using Microsoft.EntityFrameworkCore;
+using System.Data.Common;
 
 namespace DevIO.NerdStore.Pedidos.Infra.Data.Repository;
 
@@ -27,6 +28,8 @@ public class PedidoRepository(PedidosContext context) : IPedidoRepository
 
     public async Task<PedidoItem?> ObterItemPorPedido(Guid pedidoId, Guid produtoId) =>
         await Context.PedidoItems.FirstOrDefaultAsync(p => p.ProdutoId == produtoId && p.PedidoId == pedidoId);
+
+    public DbConnection ObterConexao() => Context.Database.GetDbConnection();
 
     public void Dispose() => GC.SuppressFinalize(this);
 }
