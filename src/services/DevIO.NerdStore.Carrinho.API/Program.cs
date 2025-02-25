@@ -18,7 +18,8 @@ builder.Services
     .AddApiConfiguration(Configuration)
     .AddJwtConfiguration(Configuration)
     .RegisterServices()
-    .AddSwaggerConfiguration();
+    .AddSwaggerConfiguration()
+    .AddMessageBusConfiguration(Configuration);
 
 WebApplication app = builder.Build();
 
