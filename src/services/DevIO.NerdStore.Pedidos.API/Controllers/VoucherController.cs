@@ -8,9 +8,9 @@ using System.Net;
 namespace DevIO.NerdStore.Pedidos.API.Controllers;
 
 [Authorize]
-public class VoucherController(IVoucherQueries voucherQueries) : MainController
+public class VoucherController(IVoucherQueries queries) : MainController
 {
-    private IVoucherQueries VoucherQueries { get; } = voucherQueries;
+    private IVoucherQueries Queries { get; } = queries;
 
     [HttpGet("voucher/{codigo}")]
     [ProducesResponseType(typeof(VoucherDTO), (int)HttpStatusCode.OK)]
@@ -20,7 +20,7 @@ public class VoucherController(IVoucherQueries voucherQueries) : MainController
         if (string.IsNullOrWhiteSpace(codigo))
             return NotFound();
 
-        VoucherDTO? voucher = await VoucherQueries.ObterVoucherPorCodigo(codigo);
+        VoucherDTO? voucher = await Queries.ObterVoucherPorCodigo(codigo);
 
         return voucher is null ? NotFound() : CustomResponse(voucher);
     }

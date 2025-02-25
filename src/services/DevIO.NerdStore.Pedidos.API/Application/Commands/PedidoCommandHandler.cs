@@ -11,15 +11,15 @@ namespace DevIO.NerdStore.Pedidos.API.Application.Commands;
 
 public class PedidoCommandHandler(IPedidoRepository pedidoRepository, IVoucherRepository voucherRepository) :
     CommandHandler,
-    IRequestHandler<AdicionarPedidoCommand, ValidationResult?>
+    IRequestHandler<AdicionarPedidoCommand, ValidationResult>
 {
     private IPedidoRepository PedidoRepository { get; } = pedidoRepository;
     private IVoucherRepository VoucherRepository { get; } = voucherRepository;
 
-    public async Task<ValidationResult?> Handle(AdicionarPedidoCommand message, CancellationToken cancellationToken)
+    public async Task<ValidationResult> Handle(AdicionarPedidoCommand message, CancellationToken cancellationToken)
     {
         if (!message.EhValido())
-            return message.ValidationResult;
+            return message.ValidationResult ?? new();
 
         Pedido pedido = MapearPedido(message);
 
