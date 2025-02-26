@@ -12,10 +12,9 @@ public static class DependencyInjectionConfig
     public static IServiceCollection RegisterServices(this IServiceCollection services)
     {
         services.AddScoped<IAspNetUser, AspNetUser>();
-
-        services.AddSingleton<IValidationAttributeAdapterProvider, CpfValidationAttributeAdapterProvider>();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+        services.AddSingleton<IValidationAttributeAdapterProvider, CpfValidationAttributeAdapterProvider>();
         services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
 
         services.AddHttpClient<IAutenticacaoService, AutenticacaoService>()
@@ -30,6 +29,12 @@ public static class DependencyInjectionConfig
 
         services
             .AddHttpClient<IComprasBFFService, ComprasBFFService>()
+            .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
+            .AddPolicyHandler(PollyExtensions.EsperarTentar())
+            .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+
+        services
+            .AddHttpClient<IClienteService, ClienteService>()
             .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
             .AddPolicyHandler(PollyExtensions.EsperarTentar())
             .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));

@@ -16,5 +16,9 @@ public class ClienteRepository(ClientesContext context) : IClienteRepository
 
     public void Adicionar(Cliente cliente) => Context.Clientes.Add(cliente);
 
-    public void Dispose() => Context.Dispose();
+    public void AdicionarEndereco(Endereco endereco) => Context.Enderecos.Add(endereco);
+
+    public async Task<Endereco?> ObterEnderecoPorId(Guid id) => await Context.Enderecos.FirstOrDefaultAsync(e => e.ClienteId == id);
+
+    public void Dispose() => GC.SuppressFinalize(this);
 }

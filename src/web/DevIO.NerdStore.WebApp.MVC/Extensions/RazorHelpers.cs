@@ -19,6 +19,8 @@ public static class RazorHelpers
     public static string FormatoMoeda(this RazorPage page, decimal valor) =>
         valor > 0 ? string.Format(Thread.CurrentThread.CurrentCulture, "{0:C}", valor) : "Gratuito";
 
+    private static string FormatoMoeda(decimal valor) => string.Format(Thread.CurrentThread.CurrentCulture, "{0:C}", valor);
+
     public static string MensagemEstoque(this RazorPage page, int quantidade) =>
         quantidade > 0 ? $"Apenas {quantidade} em estoque!" : "Produto esgotado!";
 
@@ -38,4 +40,7 @@ public static class RazorHelpers
 
         return sb.ToString();
     }
+
+    public static string UnidadesPorProdutoValorTotal(this RazorPage page, int unidades, decimal valor) =>
+        $"{unidades}x {FormatoMoeda(valor)} = Total: {FormatoMoeda(valor * unidades)}";
 }
