@@ -22,4 +22,18 @@ public class CatalogoService : Service, ICatalogoService
 
         return await DeserializarObjetoResponse<ItemProdutoDTO>(response);
     }
+
+    public async Task<IEnumerable<ItemProdutoDTO>> ObterItens(IEnumerable<Guid>? ids)
+    {
+        if (ids is null)
+            return [];
+
+        string idsRequest = string.Join(",", ids);
+
+        HttpResponseMessage response = await HttpClient.GetAsync($"/catalogo/produtos/lista/{idsRequest}/");
+
+        TratarErrosResponse(response);
+
+        return await DeserializarObjetoResponse<IEnumerable<ItemProdutoDTO>>(response) ?? [];
+    }
 }

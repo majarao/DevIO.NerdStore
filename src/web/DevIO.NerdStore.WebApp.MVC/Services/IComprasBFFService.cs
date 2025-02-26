@@ -18,4 +18,10 @@ public interface IComprasBFFService
     Task<ResponseResult?> AplicarVoucherCarrinho(string voucher);
 
     PedidoTransacaoViewModel MapearParaPedido(CarrinhoViewModel carrinho, EnderecoViewModel? endereco);
+
+    Task<ResponseResult?> FinalizarPedido(PedidoTransacaoViewModel pedidoTransacao);
+
+    Task<PedidoViewModel?> ObterUltimoPedido();
+
+    Task<IEnumerable<PedidoViewModel>?> ObterListaPorClienteId();
 }

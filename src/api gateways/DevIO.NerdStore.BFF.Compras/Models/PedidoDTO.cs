@@ -2,18 +2,21 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace DevIO.NerdStore.WebApp.MVC.Models;
+namespace DevIO.NerdStore.BFF.Compras.Models;
 
-public class PedidoTransacaoViewModel
+public class PedidoDTO
 {
+    public int Codigo { get; set; }
+    public int Status { get; set; }
+    public DateTime Data { get; set; }
     public decimal ValorTotal { get; set; }
     public decimal Desconto { get; set; }
     public string? VoucherCodigo { get; set; }
     public bool VoucherUtilizado { get; set; }
 
-    public List<ItemCarrinhoViewModel> Itens { get; set; } = [];
+    public List<ItemCarrinhoDTO> PedidoItems { get; set; } = [];
 
-    public EnderecoViewModel? Endereco { get; set; }
+    public EnderecoDTO? Endereco { get; set; }
 
     [Required(ErrorMessage = "Informe o número do cartão")]
     [DisplayName("Número do Cartão")]

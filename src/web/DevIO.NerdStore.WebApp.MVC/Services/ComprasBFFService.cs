@@ -106,4 +106,34 @@ public class ComprasBFFService : Service, IComprasBFFService
 
         return pedido;
     }
+
+    public async Task<ResponseResult?> FinalizarPedido(PedidoTransacaoViewModel pedidoTransacao)
+    {
+        StringContent pedidoContent = ObterConteudo(pedidoTransacao);
+
+        HttpResponseMessage response = await HttpClient.PostAsync("/compras/pedido/", pedidoContent);
+
+        if (!TratarErrosResponse(response))
+            return await DeserializarObjetoResponse<ResponseResult>(response);
+
+        return RetornoOk();
+    }
+
+    public async Task<PedidoViewModel?> ObterUltimoPedido()
+    {
+        HttpResponseMessage response = await HttpClient.GetAsync("/compras/pedido/ultimo/");
+
+        TratarErrosResponse(response);
+
+        return await DeserializarObjetoResponse<PedidoViewModel>(response);
+    }
+
+    public async Task<IEnumerable<PedidoViewModel>?> ObterListaPorClienteId()
+    {
+        HttpResponseMessage response = await HttpClient.GetAsync("/compras/pedido/lista-cliente/");
+
+        TratarErrosResponse(response);
+
+        return await DeserializarObjetoResponse<IEnumerable<PedidoViewModel>>(response);
+    }
 }

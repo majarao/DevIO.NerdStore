@@ -45,7 +45,7 @@ public abstract class MainController : Controller
 
     protected void AdicionarErroProcessamento(string erro) => Erros.Add(erro);
 
-    protected void LimparErroProcessamento() => Erros.Clear();
+    protected void LimparErrosProcessamento() => Erros.Clear();
 
     protected bool ResponsePossuiErros(ResponseResult? resposta)
     {

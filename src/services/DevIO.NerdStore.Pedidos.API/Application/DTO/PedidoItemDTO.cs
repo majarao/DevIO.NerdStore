@@ -13,7 +13,7 @@ public class PedidoItemDTO
 
     public static PedidoItem ParaPedidoItem(PedidoItemDTO pedidoItemDTO)
     {
-        return new PedidoItem(
+        return new(
             pedidoItemDTO.ProdutoId,
             pedidoItemDTO.Nome,
             pedidoItemDTO.Quantidade,
