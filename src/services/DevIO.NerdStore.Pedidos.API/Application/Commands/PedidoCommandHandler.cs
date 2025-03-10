@@ -1,4 +1,6 @@
 ﻿using DevIO.NerdStore.Core.Messages;
+using DevIO.NerdStore.Core.Messages.Integration;
+using DevIO.NerdStore.MessageBus;
 using DevIO.NerdStore.Pedidos.API.Application.DTO;
 using DevIO.NerdStore.Pedidos.API.Application.Events;
 using DevIO.NerdStore.Pedidos.Domain.Pedidos;
@@ -9,12 +11,13 @@ using MediatR;
 
 namespace DevIO.NerdStore.Pedidos.API.Application.Commands;
 
-public class PedidoCommandHandler(IPedidoRepository pedidoRepository, IVoucherRepository voucherRepository) :
+public class PedidoCommandHandler(IPedidoRepository pedidoRepository, IVoucherRepository voucherRepository, IMessageBus bus) :
     CommandHandler,
     IRequestHandler<AdicionarPedidoCommand, ValidationResult>
 {
     private IPedidoRepository PedidoRepository { get; } = pedidoRepository;
     private IVoucherRepository VoucherRepository { get; } = voucherRepository;
+    private IMessageBus Bus { get; } = bus;
 
     public async Task<ValidationResult> Handle(AdicionarPedidoCommand message, CancellationToken cancellationToken)
     {
@@ -29,7 +32,7 @@ public class PedidoCommandHandler(IPedidoRepository pedidoRepository, IVoucherRe
         if (!ValidarPedido(pedido))
             return ValidationResult;
 
-        if (!ProcessarPagamento(pedido))
+        if (!await ProcessarPagamento(pedido, message))
             return ValidationResult;
 
         pedido.AutorizarPedido();
@@ -115,8 +118,27 @@ public class PedidoCommandHandler(IPedidoRepository pedidoRepository, IVoucherRe
         return true;
     }
 
-    public bool ProcessarPagamento(Pedido pedido)
+    public async Task<bool> ProcessarPagamento(Pedido pedido, AdicionarPedidoCommand message)
     {
-        return true;
+        PedidoIniciadoIntegrationEvent pedidoIniciado = new()
+        {
+            PedidoId = pedido.Id,
+            ClienteId = pedido.ClienteId,
+            Valor = pedido.ValorTotal,
+            NomeCartao = message.NomeCartao,
+            NumeroCartao = message.NumeroCartao,
+            MesAnoVencimento = message.ExpiracaoCartao,
+            CVV = message.CvvCartao
+        };
+
+        ResponseMessage result = await Bus.RequestAsync<PedidoIniciadoIntegrationEvent, ResponseMessage>(pedidoIniciado);
+
+        if (result.ValidationResult.IsValid)
+            return true;
+
+        foreach (ValidationFailure? erro in result.ValidationResult.Errors)
+            AdicionarErro(erro.ErrorMessage);
+
+        return false;
     }
 }
