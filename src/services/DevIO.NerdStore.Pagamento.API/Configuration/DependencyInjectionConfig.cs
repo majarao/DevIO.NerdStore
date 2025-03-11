@@ -1,5 +1,5 @@
-﻿using DevIO.NerdStore.Pagamentos.API.Data.Repository;
-using DevIO.NerdStore.Pagamentos.API.Data;
+﻿using DevIO.NerdStore.Pagamentos.API.Data;
+using DevIO.NerdStore.Pagamentos.API.Data.Repository;
 using DevIO.NerdStore.Pagamentos.API.Models;
 using DevIO.NerdStore.WebAPI.Core.Usuario;
 

@@ -1,4 +1,5 @@
 ﻿using DevIO.NerdStore.Pagamentos.API.Data;
+using DevIO.NerdStore.Pagamentos.API.Facade;
 using DevIO.NerdStore.WebAPI.Core.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,8 @@ public static class ApiConfig
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
         services.AddControllers();
+
+        services.Configure<PagamentoConfig>(configuration.GetSection("PagamentoConfig"));
 
         services.AddCors(options =>
         {
