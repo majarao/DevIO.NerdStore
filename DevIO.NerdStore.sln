@@ -39,7 +39,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Catalogo.AP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Clientes.API", "src\services\DevIO.NerdStore.Cliente.API\DevIO.NerdStore.Clientes.API.csproj", "{E95BFCA9-2E28-4F2E-8F0C-265ED2E388A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Pagamento.API", "src\services\DevIO.NerdStore.Pagamento.API\DevIO.NerdStore.Pagamento.API.csproj", "{05C4F037-1F63-4D88-A517-CBACF40A122B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Pagamentos.API", "src\services\DevIO.NerdStore.Pagamento.API\DevIO.NerdStore.Pagamentos.API.csproj", "{05C4F037-1F63-4D88-A517-CBACF40A122B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Pedidos.API", "src\services\DevIO.NerdStore.Pedidos.API\DevIO.NerdStore.Pedidos.API.csproj", "{4EB94112-C4C0-41C2-BD62-A047BE44E9A6}"
 EndProject
@@ -59,7 +59,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.BFF.Compras
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Pedidos.Domain", "src\services\DevIO.NerdStore.Pedidos.Domain\DevIO.NerdStore.Pedidos.Domain.csproj", "{191A22CD-54D4-482F-9D6A-81B4087B14A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Pedido.Infra", "src\services\DevIO.NerdStore.Pedidos.Infra\DevIO.NerdStore.Pedidos.Infra.csproj", "{424B5B6B-D004-4BA1-88DB-FF4C6658D46C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.NerdStore.Pedidos.Infra", "src\services\DevIO.NerdStore.Pedidos.Infra\DevIO.NerdStore.Pedidos.Infra.csproj", "{424B5B6B-D004-4BA1-88DB-FF4C6658D46C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -152,5 +152,8 @@ Global
 		{5C4AB7BB-287E-411B-8FBA-9EC4C30491B9} = {F75E96F7-1016-4FBD-A881-E44C327C50F8}
 		{191A22CD-54D4-482F-9D6A-81B4087B14A6} = {D249FA84-46F0-4E79-B54B-50CF861A14B7}
 		{424B5B6B-D004-4BA1-88DB-FF4C6658D46C} = {D249FA84-46F0-4E79-B54B-50CF861A14B7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BF4D6080-216F-40CD-808B-BA2B43FC0396}
 	EndGlobalSection
 EndGlobal

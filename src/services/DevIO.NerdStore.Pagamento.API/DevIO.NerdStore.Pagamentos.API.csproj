@@ -4,25 +4,21 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>3475bea9-e383-4a86-ab4c-208c70956596</UserSecretsId>
+    <UserSecretsId>3ad29626-2cd2-40b1-a57f-bf2218d6854f</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="7.3.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\building blocks\DevIO.NerdStore.Core\DevIO.NerdStore.Core.csproj" />
-    <ProjectReference Include="..\..\building blocks\DevIO.NerdStore.MessageBus\DevIO.NerdStore.MessageBus.csproj" />
     <ProjectReference Include="..\..\building blocks\DevIO.NerdStore.WebAPI.Core\DevIO.NerdStore.WebAPI.Core.csproj" />
   </ItemGroup>
 
