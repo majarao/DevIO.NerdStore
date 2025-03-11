@@ -4,7 +4,7 @@ namespace DevIO.NerdStore.Pagamentos.API.Models;
 
 public class Pagamento : Entity, IAggregateRoot
 {
-    protected Pagamento() { }
+    public Pagamento() { }
 
     public Guid PedidoId { get; set; }
     public decimal Valor { get; set; }
