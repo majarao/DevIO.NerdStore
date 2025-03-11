@@ -1,5 +1,6 @@
 ﻿using DevIO.NerdStore.Core.Utils;
 using DevIO.NerdStore.MessageBus;
+using DevIO.NerdStore.Pedidos.API.Services;
 
 namespace DevIO.NerdStore.Pedidos.API.Configuration;
 
@@ -12,7 +13,8 @@ public static class MessageBusConfig
         ArgumentNullException.ThrowIfNull(connectionString);
 
         services
-            .AddMessageBus(connectionString);
+            .AddMessageBus(connectionString)
+            .AddHostedService<PedidoOrquestradorIntegrationHandler>();
 
         return services;
     }
