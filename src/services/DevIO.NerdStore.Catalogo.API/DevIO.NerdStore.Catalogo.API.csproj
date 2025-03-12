@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\building blocks\DevIO.NerdStore.Core\DevIO.NerdStore.Core.csproj" />
+    <ProjectReference Include="..\..\building blocks\DevIO.NerdStore.MessageBus\DevIO.NerdStore.MessageBus.csproj" />
     <ProjectReference Include="..\..\building blocks\DevIO.NerdStore.WebAPI.Core\DevIO.NerdStore.WebAPI.Core.csproj" />
   </ItemGroup>
 
