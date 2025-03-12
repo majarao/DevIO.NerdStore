@@ -39,30 +39,33 @@ public class PagamentoService(IPagamentoFacade pagamentoFacade, IPagamentoReposi
 
     public async Task<ResponseMessage> CapturarPagamento(Guid pedidoId)
     {
-        IEnumerable<Transacao> transacoes = await Repository.ObterTransacaoesPorPedidoId(pedidoId);
-
-        Transacao? transacaoAutorizada = transacoes?.FirstOrDefault(t => t.Status == StatusTransacao.Autorizado);
-
         ValidationResult validationResult = new();
 
-        if (transacaoAutorizada is null)
-            throw new DomainException($"Transação não encontrada para o pedido {pedidoId}");
+        IEnumerable<Transacao> transacoes = await Repository.ObterTransacaoesPorPedidoId(pedidoId);
 
-        Transacao transacao = await Facade.CapturarPagamento(transacaoAutorizada);
-
-        if (transacao.Status != StatusTransacao.Pago)
+        if (transacoes.Any())
         {
-            validationResult.Errors.Add(new("Pagamento", $"Não foi possível capturar o pagamento do pedido {pedidoId}"));
+            Transacao? transacaoAutorizada = (transacoes?.FirstOrDefault(t => t.Status == StatusTransacao.Autorizado)) ??
+                throw new DomainException($"Transação não encontrada para o pedido {pedidoId}");
 
-            return new(validationResult);
-        }
+            Transacao transacao = await Facade.CapturarPagamento(transacaoAutorizada);
 
-        transacao.PagamentoId = transacaoAutorizada.PagamentoId;
-        Repository.AdicionarTransacao(transacao);
+            if (transacao.Status != StatusTransacao.Pago)
+            {
+                validationResult.Errors.Add(new("Pagamento", $"Não foi possível capturar o pagamento do pedido {pedidoId}"));
 
-        if (!await Repository.UnitOfWork.Commit())
-        {
-            validationResult.Errors.Add(new("Pagamento", $"Não foi possível persistir a captura do pagamento do pedido {pedidoId}"));
+                return new(validationResult);
+            }
+
+            transacao.PagamentoId = transacaoAutorizada.PagamentoId;
+            Repository.AdicionarTransacao(transacao);
+
+            if (!await Repository.UnitOfWork.Commit())
+            {
+                validationResult.Errors.Add(new("Pagamento", $"Não foi possível persistir a captura do pagamento do pedido {pedidoId}"));
+
+                return new(validationResult);
+            }
 
             return new(validationResult);
         }
@@ -72,30 +75,33 @@ public class PagamentoService(IPagamentoFacade pagamentoFacade, IPagamentoReposi
 
     public async Task<ResponseMessage> CancelarPagamento(Guid pedidoId)
     {
-        IEnumerable<Transacao> transacoes = await Repository.ObterTransacaoesPorPedidoId(pedidoId);
-
-        Transacao? transacaoAutorizada = transacoes?.FirstOrDefault(t => t.Status == StatusTransacao.Autorizado);
-
         ValidationResult validationResult = new();
 
-        if (transacaoAutorizada is null)
-            throw new DomainException($"Transação não encontrada para o pedido {pedidoId}");
+        IEnumerable<Transacao> transacoes = await Repository.ObterTransacaoesPorPedidoId(pedidoId);
 
-        Transacao transacao = await Facade.CancelarAutorizacao(transacaoAutorizada);
-
-        if (transacao.Status != StatusTransacao.Cancelado)
+        if (transacoes.Any())
         {
-            validationResult.Errors.Add(new("Pagamento", $"Não foi possível cancelar o pagamento do pedido {pedidoId}"));
+            Transacao? transacaoAutorizada = transacoes?.FirstOrDefault(t => t.Status == StatusTransacao.Autorizado) ??
+                throw new DomainException($"Transação não encontrada para o pedido {pedidoId}");
 
-            return new(validationResult);
-        }
+            Transacao transacao = await Facade.CancelarAutorizacao(transacaoAutorizada);
 
-        transacao.PagamentoId = transacaoAutorizada.PagamentoId;
-        Repository.AdicionarTransacao(transacao);
+            if (transacao.Status != StatusTransacao.Cancelado)
+            {
+                validationResult.Errors.Add(new("Pagamento", $"Não foi possível cancelar o pagamento do pedido {pedidoId}"));
 
-        if (!await Repository.UnitOfWork.Commit())
-        {
-            validationResult.Errors.Add(new("Pagamento", $"Não foi possível persistir o cancelamento do pagamento do pedido {pedidoId}"));
+                return new(validationResult);
+            }
+
+            transacao.PagamentoId = transacaoAutorizada.PagamentoId;
+            Repository.AdicionarTransacao(transacao);
+
+            if (!await Repository.UnitOfWork.Commit())
+            {
+                validationResult.Errors.Add(new("Pagamento", $"Não foi possível persistir o cancelamento do pagamento do pedido {pedidoId}"));
+
+                return new(validationResult);
+            }
 
             return new(validationResult);
         }

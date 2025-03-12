@@ -1,4 +1,5 @@
 ﻿using DevIO.NerdStore.Carrinho.API.Data;
+using DevIO.NerdStore.Carrinho.API.Model;
 using DevIO.NerdStore.Core.Messages.Integration;
 using DevIO.NerdStore.MessageBus;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +27,7 @@ public class CarrinhoIntegrationHandler(IMessageBus bus, IServiceProvider servic
 
         CarrinhoContext context = scope.ServiceProvider.GetRequiredService<CarrinhoContext>();
 
-        Model.CarrinhoCliente? carrinho = await context.CarrinhoCliente.FirstOrDefaultAsync(c => c.ClienteId == message.ClienteId);
+        CarrinhoCliente? carrinho = await context.CarrinhoCliente.FirstOrDefaultAsync(c => c.ClienteId == message.ClienteId);
 
         if (carrinho is not null)
         {
