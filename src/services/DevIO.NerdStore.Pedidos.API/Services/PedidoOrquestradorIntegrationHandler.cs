@@ -1,8 +1,13 @@
-﻿namespace DevIO.NerdStore.Pedidos.API.Services;
+﻿using DevIO.NerdStore.Core.Messages.Integration;
+using DevIO.NerdStore.MessageBus;
+using DevIO.NerdStore.Pedidos.API.Application.Queries;
 
-public class PedidoOrquestradorIntegrationHandler : IHostedService, IDisposable
+namespace DevIO.NerdStore.Pedidos.API.Services;
+
+public class PedidoOrquestradorIntegrationHandler(IServiceProvider serviceProvider) : IHostedService, IDisposable
 {
     private Timer? Timer { get; set; }
+    private IServiceProvider ServiceProvider { get; } = serviceProvider;
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
@@ -11,9 +16,22 @@ public class PedidoOrquestradorIntegrationHandler : IHostedService, IDisposable
         return Task.CompletedTask;
     }
 
-    private void ProcessarPedidos(object? state)
+    private async void ProcessarPedidos(object? state)
     {
+        using IServiceScope scope = ServiceProvider.CreateScope();
 
+        IPedidoQueries pedidoQueries = scope.ServiceProvider.GetRequiredService<IPedidoQueries>();
+
+        Application.DTO.PedidoDTO? pedido = await pedidoQueries.ObterPedidosAutorizados();
+
+        if (pedido == null) 
+            return;
+
+        IMessageBus bus = scope.ServiceProvider.GetRequiredService<IMessageBus>();
+
+        PedidoAutorizadoIntegrationEvent pedidoAutorizado = new(pedido.ClienteId, pedido.Id, pedido.PedidoItems.ToDictionary(p => p.ProdutoId, p => p.Quantidade));
+
+        await bus.PublishAsync(pedidoAutorizado);
     }
 
     public Task StopAsync(CancellationToken cancellationToken)

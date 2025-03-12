@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using DevIO.NerdStore.Pedidos.API.Application.DTO;
 using DevIO.NerdStore.Pedidos.Domain.Pedidos;
+using DevIO.NerdStore.Pedidos.Infra.Data.Repository;
 
 namespace DevIO.NerdStore.Pedidos.API.Application.Queries;
 
@@ -70,5 +71,33 @@ public class PedidoQueries(IPedidoRepository repository) : IPedidoQueries
         }
 
         return pedido;
+    }
+
+    public async Task<PedidoDTO?> ObterPedidosAutorizados()
+    {
+        const string sql = @"SELECT 
+                                P.ID as 'PedidoId', P.ID, P.CLIENTEID, 
+                                PI.ID as 'PedidoItemId', PI.ID, PI.PRODUTOID, PI.QUANTIDADE 
+                                FROM PEDIDOS P 
+                                INNER JOIN PEDIDOITEMS PI ON P.ID = PI.PEDIDOID 
+                                WHERE P.PEDIDOSTATUS = 1                                
+                                ORDER BY P.DATACADASTRO";
+
+        Dictionary<Guid, PedidoDTO> lookup = [];
+
+        await Repository.ObterConexao().QueryAsync<PedidoDTO, PedidoItemDTO, PedidoDTO>(sql,
+            (p, pi) =>
+            {
+                if (!lookup.TryGetValue(p.Id, out PedidoDTO? pedidoDTO))
+                    lookup.Add(p.Id, pedidoDTO = p);
+
+                pedidoDTO.PedidoItems ??= [];
+                pedidoDTO.PedidoItems.Add(pi);
+
+                return pedidoDTO;
+
+            }, splitOn: "PedidoId,PedidoItemId");
+
+        return lookup.Values.OrderBy(p => p.Data).FirstOrDefault();
     }
 }
