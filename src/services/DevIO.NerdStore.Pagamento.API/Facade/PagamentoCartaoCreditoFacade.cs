@@ -36,9 +36,27 @@ public class PagamentoCartaoCreditoFacade(IOptions<PagamentoConfig> pagamentoCon
         return ParaTransacao(await transacao.AuthorizeCardTransaction());
     }
 
+    public async Task<Transacao> CapturarPagamento(Transacao transacao)
+    {
+        NerdsPagService nerdsPagSvc = new(PagamentoConfig.DefaultApiKey, PagamentoConfig.DefaultEncryptionKey);
+
+        Transaction transaction = ParaTransaction(transacao, nerdsPagSvc);
+
+        return ParaTransacao(await transaction.CaptureCardTransaction());
+    }
+
+    public async Task<Transacao> CancelarAutorizacao(Transacao transacao)
+    {
+        NerdsPagService nerdsPagSvc = new(PagamentoConfig.DefaultApiKey, PagamentoConfig.DefaultEncryptionKey);
+
+        Transaction transaction = ParaTransaction(transacao, nerdsPagSvc);
+
+        return ParaTransacao(await transaction.CancelAuthorization());
+    }
+
     private static Transacao ParaTransacao(Transaction transaction)
     {
-        return new Transacao
+        return new()
         {
             Id = Guid.NewGuid(),
             Status = (StatusTransacao)transaction.Status,
@@ -49,6 +67,20 @@ public class PagamentoCartaoCreditoFacade(IOptions<PagamentoConfig> pagamentoCon
             DataTransacao = transaction.TransactionDate,
             NSU = transaction.Nsu!,
             TID = transaction.Tid!
+        };
+    }
+
+    public static Transaction ParaTransaction(Transacao transacao, NerdsPagService nerdsPagService)
+    {
+        return new(nerdsPagService)
+        {
+            Status = (TransactionStatus)transacao.Status,
+            Amount = transacao.ValorTotal,
+            CardBrand = transacao.BandeiraCartao,
+            AuthorizationCode = transacao.CodigoAutorizacao,
+            Cost = transacao.CustoTransacao,
+            Nsu = transacao.NSU,
+            Tid = transacao.TID
         };
     }
 }

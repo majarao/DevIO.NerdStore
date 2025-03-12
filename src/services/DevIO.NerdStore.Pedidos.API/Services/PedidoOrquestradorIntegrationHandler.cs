@@ -24,7 +24,7 @@ public class PedidoOrquestradorIntegrationHandler(IServiceProvider serviceProvid
 
         Application.DTO.PedidoDTO? pedido = await pedidoQueries.ObterPedidosAutorizados();
 
-        if (pedido == null) 
+        if (pedido == null)
             return;
 
         IMessageBus bus = scope.ServiceProvider.GetRequiredService<IMessageBus>();

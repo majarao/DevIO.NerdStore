@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using DevIO.NerdStore.Pedidos.API.Application.DTO;
 using DevIO.NerdStore.Pedidos.Domain.Pedidos;
-using DevIO.NerdStore.Pedidos.Infra.Data.Repository;
 
 namespace DevIO.NerdStore.Pedidos.API.Application.Queries;
 

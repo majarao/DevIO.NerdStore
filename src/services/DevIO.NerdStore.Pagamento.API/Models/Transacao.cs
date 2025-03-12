@@ -14,5 +14,5 @@ public class Transacao : Entity
     public string NSU { get; set; } = string.Empty;
 
     public Guid PagamentoId { get; set; }
-    public Pagamento? Pagamento { get; set; }
+    public Pagamento Pagamento { get; set; } = null!;
 }

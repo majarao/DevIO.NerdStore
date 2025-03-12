@@ -17,7 +17,7 @@ public class CatalogoIntegrationHandler(IServiceProvider serviceProvider, IMessa
         return Task.CompletedTask;
     }
 
-    private void SetSubscribers() => 
+    private void SetSubscribers() =>
         Bus.SubscribeAsync<PedidoAutorizadoIntegrationEvent>("PedidoAutorizado", async request => await BaixarEstoque(request));
 
     private async Task BaixarEstoque(PedidoAutorizadoIntegrationEvent message)

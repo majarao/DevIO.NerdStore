@@ -14,7 +14,8 @@ public static class MessageBusConfig
 
         services
             .AddMessageBus(connectionString)
-            .AddHostedService<PedidoOrquestradorIntegrationHandler>();
+            .AddHostedService<PedidoOrquestradorIntegrationHandler>()
+            .AddHostedService<PedidoIntegrationHandler>();
 
         return services;
     }
