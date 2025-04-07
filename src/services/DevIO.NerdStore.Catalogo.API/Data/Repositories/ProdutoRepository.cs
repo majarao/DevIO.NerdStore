@@ -1,4 +1,5 @@
-﻿using DevIO.NerdStore.Catalogo.API.Models;
+﻿using Dapper;
+using DevIO.NerdStore.Catalogo.API.Models;
 using DevIO.NerdStore.Core.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +12,31 @@ public class ProdutoRepository(CatalogoContext context) : IProdutoRepository
 
     public async Task<Produto?> ObterPorId(Guid id) => await Context.Produtos.SingleOrDefaultAsync(p => p.Id == id);
 
-    public async Task<IEnumerable<Produto>> ObterTodos() => await Context.Produtos.AsNoTracking().ToListAsync();
+    public async Task<PagedResult<Produto>> ObterTodos(int pageSize, int pageIndex, string? query = null)
+    {
+        string sql = @$"SELECT * FROM Produtos 
+                      WHERE (@Nome IS NULL OR Nome LIKE '%' + @Nome + '%') 
+                      ORDER BY [Nome] 
+                      OFFSET {pageSize * (pageIndex - 1)} ROWS 
+                      FETCH NEXT {pageSize} ROWS ONLY 
+                      SELECT COUNT(Id) FROM Produtos 
+                      WHERE (@Nome IS NULL OR Nome LIKE '%' + @Nome + '%')
+        ";
+
+        SqlMapper.GridReader multi = await Context.Database.GetDbConnection().QueryMultipleAsync(sql, new { Nome = query });
+
+        IEnumerable<Produto> produtos = multi.Read<Produto>();
+        int total = multi.Read<int>().FirstOrDefault();
+
+        return new PagedResult<Produto>()
+        {
+            List = produtos,
+            TotalResults = total,
+            PageIndex = pageIndex,
+            PageSize = pageSize,
+            Query = query
+        };
+    }
 
     public void Adicionar(Produto produto) => Context.Produtos.Add(produto);
 

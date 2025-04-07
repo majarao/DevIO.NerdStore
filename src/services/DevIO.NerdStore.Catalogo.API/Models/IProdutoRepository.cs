@@ -4,7 +4,7 @@ namespace DevIO.NerdStore.Catalogo.API.Models;
 
 public interface IProdutoRepository : IRepository<Produto>
 {
-    Task<IEnumerable<Produto>> ObterTodos();
+    Task<PagedResult<Produto>> ObterTodos(int pageSize, int pageIndex, string? query = null);
 
     Task<Produto?> ObterPorId(Guid id);
 
