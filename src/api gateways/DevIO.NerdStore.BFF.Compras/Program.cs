@@ -16,6 +16,7 @@ IConfiguration Configuration = builderConfiguration.Build();
 
 builder.Services
     .AddApiConfiguration(Configuration)
+    .ConfigureGrpcServices(Configuration)
     .AddJwtConfiguration(Configuration)
     .AddSwaggerConfiguration()
     .RegisterServices()
