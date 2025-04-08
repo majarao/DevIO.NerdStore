@@ -1,4 +1,5 @@
 ﻿using DevIO.NerdStore.Carrinho.API.Data;
+using DevIO.NerdStore.Carrinho.API.Services.gRPC;
 using DevIO.NerdStore.WebAPI.Core.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
@@ -15,6 +16,8 @@ public static class ApiConfig
         services.AddControllers()
             .AddJsonOptions(options =>
                  options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+        services.AddGrpc();
 
         services.AddCors(options =>
         {
@@ -47,6 +50,7 @@ public static class ApiConfig
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
+            endpoints.MapGrpcService<CarrinhoGrpcService>().RequireCors("Total");
         });
 
         return app;

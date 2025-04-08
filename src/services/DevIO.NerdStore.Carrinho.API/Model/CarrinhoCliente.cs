@@ -17,7 +17,7 @@ public class CarrinhoCliente
     public decimal Desconto { get; set; }
     public Voucher? Voucher { get; set; }
 
-    protected CarrinhoCliente() { }
+    public CarrinhoCliente() { }
 
     public CarrinhoCliente(Guid? clienteId)
     {
