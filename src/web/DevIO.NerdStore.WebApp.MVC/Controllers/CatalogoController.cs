@@ -11,9 +11,13 @@ public class CatalogoController(ICatalogoService catalogoService) : MainControll
     [HttpGet]
     [Route("")]
     [Route("vitrine")]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index([FromQuery] int ps = 8, [FromQuery] int page = 1, [FromQuery] string? q = null)
     {
-        IEnumerable<ProdutoViewModel>? produtos = await CatalogoService.ObterTodos();
+        PagedViewModel<ProdutoViewModel> produtos = await CatalogoService.ObterTodos(ps, page, q);
+
+        ViewBag.Pesquisa = q;
+
+        produtos.ReferenceAction = "Index";
 
         return View(produtos);
     }

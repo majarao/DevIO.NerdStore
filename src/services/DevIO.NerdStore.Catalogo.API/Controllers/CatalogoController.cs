@@ -1,5 +1,4 @@
-﻿using DevIO.NerdStore.Catalogo.API.Data.Repositories;
-using DevIO.NerdStore.Catalogo.API.Models;
+﻿using DevIO.NerdStore.Catalogo.API.Models;
 using DevIO.NerdStore.WebAPI.Core.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
