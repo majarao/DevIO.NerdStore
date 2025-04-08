@@ -17,7 +17,7 @@ public static class GrpcConfig
 
             ArgumentNullException.ThrowIfNull(carrinhoUrl);
 
-            options.Address = new Uri(configuration[carrinhoUrl]!);
+            options.Address = new Uri(carrinhoUrl);
         })
             .AddInterceptor<GrpcServiceInterceptor>();
 
