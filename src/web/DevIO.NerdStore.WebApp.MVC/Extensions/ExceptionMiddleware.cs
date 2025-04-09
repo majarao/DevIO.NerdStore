@@ -1,4 +1,5 @@
-﻿using Polly.CircuitBreaker;
+﻿using Grpc.Core;
+using Polly.CircuitBreaker;
 using System.Net;
 
 namespace DevIO.NerdStore.WebApp.MVC.Extensions;
@@ -20,6 +21,21 @@ public class ExceptionMiddleware(RequestDelegate next)
         catch (BrokenCircuitException)
         {
             HandleCircuitBreakerExceptionAsync(httpContext);
+        }
+        catch (RpcException ex)
+        {
+            int statusCode = ex.StatusCode switch
+            {
+                StatusCode.Internal => 400,
+                StatusCode.Unauthenticated => 401,
+                StatusCode.PermissionDenied => 403,
+                StatusCode.Unimplemented => 404,
+                _ => 500
+            };
+
+            HttpStatusCode httpStatusCode = Enum.Parse<HttpStatusCode>(statusCode.ToString());
+
+            HandleRequestExceptionAsync(httpContext, httpStatusCode);
         }
     }
 
