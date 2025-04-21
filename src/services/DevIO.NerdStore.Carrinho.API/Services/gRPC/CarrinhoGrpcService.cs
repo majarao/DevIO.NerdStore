@@ -20,7 +20,7 @@ public class CarrinhoGrpcService(IAspNetUser user, CarrinhoContext context) : Ca
         return MapCarrinhoClienteToProtoResponse(carrinho);
     }
 
-    private async Task<CarrinhoCliente?> ObterCarrinhoCliente() => 
+    private async Task<CarrinhoCliente?> ObterCarrinhoCliente() =>
         await Context.CarrinhoCliente
             .Include(c => c.Itens)
             .FirstOrDefaultAsync(c => c.ClienteId == User.ObterUserId());

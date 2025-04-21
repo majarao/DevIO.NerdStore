@@ -1,5 +1,6 @@
 ﻿using DevIO.NerdStore.BFF.Compras.Services.gRPC;
 using DevIO.NerdStore.Carrinho.API.Services.gRPC;
+using DevIO.NerdStore.WebAPI.Core.Extensions;
 
 namespace DevIO.NerdStore.BFF.Compras.Configuration;
 
@@ -19,7 +20,8 @@ public static class GrpcConfig
 
             options.Address = new Uri(carrinhoUrl);
         })
-            .AddInterceptor<GrpcServiceInterceptor>();
+            .AddInterceptor<GrpcServiceInterceptor>()
+            .AllowSelfSignedCertificate();
 
         return services;
     }

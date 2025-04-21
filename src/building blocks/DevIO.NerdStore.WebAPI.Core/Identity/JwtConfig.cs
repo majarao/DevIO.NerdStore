@@ -25,6 +25,7 @@ public static class JwtConfig
             })
             .AddJwtBearer(bearerOptions =>
             {
+                bearerOptions.BackchannelHttpHandler = new HttpClientHandler { ServerCertificateCustomValidationCallback = delegate { return true; } };
                 bearerOptions.MapInboundClaims = false;
                 bearerOptions.RequireHttpsMetadata = true;
                 bearerOptions.SaveToken = true;

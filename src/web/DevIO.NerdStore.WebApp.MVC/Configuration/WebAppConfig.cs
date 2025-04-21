@@ -1,4 +1,6 @@
 ﻿using DevIO.NerdStore.WebApp.MVC.Extensions;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 
@@ -10,6 +12,12 @@ public static class WebAppConfig
     {
         services.AddControllersWithViews();
 
+        services.Configure<ForwardedHeadersOptions>(options =>
+        {
+            options.ForwardedHeaders =
+                ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+        });
+
         services.Configure<AppSettings>(configuration);
 
         return services;
@@ -17,6 +25,8 @@ public static class WebAppConfig
 
     public static IApplicationBuilder UseMvcConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
     {
+        app.UseForwardedHeaders();
+
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();

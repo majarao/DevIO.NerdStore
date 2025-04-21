@@ -1,4 +1,5 @@
-﻿using DevIO.NerdStore.WebAPI.Core.Usuario;
+﻿using DevIO.NerdStore.WebAPI.Core.Extensions;
+using DevIO.NerdStore.WebAPI.Core.Usuario;
 using DevIO.NerdStore.WebApp.MVC.Extensions;
 using DevIO.NerdStore.WebApp.MVC.Services;
 using DevIO.NerdStore.WebApp.MVC.Services.Handlers;
@@ -19,25 +20,29 @@ public static class DependencyInjectionConfig
 
         services.AddHttpClient<IAutenticacaoService, AutenticacaoService>()
             .AddPolicyHandler(PollyExtensions.EsperarTentar())
-            .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+            .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)))
+            .AllowSelfSignedCertificate();
 
         services
             .AddHttpClient<ICatalogoService, CatalogoService>()
             .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
             .AddPolicyHandler(PollyExtensions.EsperarTentar())
-            .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+            .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)))
+            .AllowSelfSignedCertificate();
 
         services
             .AddHttpClient<IComprasBFFService, ComprasBFFService>()
             .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
             .AddPolicyHandler(PollyExtensions.EsperarTentar())
-            .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+            .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)))
+            .AllowSelfSignedCertificate();
 
         services
             .AddHttpClient<IClienteService, ClienteService>()
             .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
             .AddPolicyHandler(PollyExtensions.EsperarTentar())
-            .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+            .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)))
+            .AllowSelfSignedCertificate();
 
         return services;
     }
